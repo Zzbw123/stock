@@ -1,0 +1,23 @@
+{
+  "figure_id": "fig_leave_one_indicator_sensitivity",
+  "contract": {
+    "figure_id": "fig_leave_one_indicator_sensitivity",
+    "purpose": "检验 TOPSIS 结论是否被某一个指标主导",
+    "core_conclusion": "去除任一指标后，2025 年排名最大变化为 2 位，排序结论较稳健",
+    "chart_type": "horizontal bar sensitivity plot",
+    "evidence_layers": "leave-one-indicator rank change, Spearman correlation labels",
+    "source_data_paths": "data/processed/standardized_matrix.csv; outputs/tables/topsis_scores.csv",
+    "output_targets": "outputs/figures/leave_one_indicator_sensitivity.png/svg/pdf",
+    "failure_signal": "若去掉某一指标后最新年度排名大幅改善或相关性显著降低，则模型被单一指标主导"
+  },
+  "metrics": {
+    "sensitivity_min_spearman": 0.9608957219251338,
+    "sensitivity_latest_rank_max_abs_change": 2,
+    "sensitivity_min_top5_overlap": 4
+  },
+  "source_data_paths": [
+    "data/processed/standardized_matrix.csv",
+    "outputs/tables/topsis_scores.csv"
+  ],
+  "generation_script": "src/advanced_visualizations.py"
+}

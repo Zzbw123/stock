@@ -1,0 +1,26 @@
+{
+  "figure_id": "fig_stage_score_distribution",
+  "contract": {
+    "figure_id": "fig_stage_score_distribution",
+    "purpose": "比较不同发展阶段的综合绩效得分分布",
+    "core_conclusion": "2021-2023 高位表现期得分整体最高，2024-2025 近期调整期明显回落",
+    "chart_type": "boxplot with jittered observations",
+    "evidence_layers": "stage-level TOPSIS score distribution",
+    "source_data_paths": "outputs/tables/topsis_scores.csv",
+    "output_targets": "outputs/figures/stage_score_distribution.png/svg/pdf",
+    "failure_signal": "若阶段分布高度重叠，则阶段性叙述证据不足"
+  },
+  "metrics": {
+    "sensitivity_min_spearman": 0.9608957219251338,
+    "sensitivity_latest_rank_max_abs_change": 2,
+    "sensitivity_min_top5_overlap": 4,
+    "degradation_total_weighted_change_2023_to_latest": -0.35778882416385427,
+    "entropy_weight_vs_abs_pc1_loading_spearman": 0.4666666666666666,
+    "stage_high_period_median_score": 0.7829800950360987,
+    "stage_recent_period_median_score": 0.5674609573405416
+  },
+  "source_data_paths": [
+    "outputs/tables/topsis_scores.csv"
+  ],
+  "generation_script": "src/advanced_visualizations.py"
+}

@@ -1,0 +1,2 @@
+﻿date,model,window,horizon,close,predicted_direction,predicted_probability,threshold,signal,note
+2026-06-11,fusion,20,5,64.32,0,0.4732692241668701,0.5,stay_flat,Predicted from latest available feature row; future return is not yet known.

@@ -1,0 +1,24 @@
+{
+  "figure_id": "lstm_fig1_model_progress",
+  "generated_at": "2026-06-12T12:35:50",
+  "script": "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\src\\generate_lstm_full_report.py",
+  "source_data_paths": "outputs/tables/lstm_metrics.csv; outputs/tables/lstm_rolling_metrics.csv; outputs/tables/dual_branch_metrics.csv",
+  "plot_data_paths": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\tables\\plot_data_lstm_model_progress.csv"
+  ],
+  "output_targets": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig1_model_progress.svg",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig1_model_progress.png",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig1_model_progress.pdf"
+  ],
+  "contract": {
+    "figure_id": "lstm_fig1_model_progress",
+    "purpose": "比较 LSTM 体系从单股模型到滚动验证与双分支面板模型的性能演进",
+    "core_conclusion": "双分支 LSTM 的 F1-score 明显高于单股 LSTM，但策略收益仍为负，说明模型提升不能替代交易风控。",
+    "chart_type": "two-panel horizontal bar chart",
+    "evidence_layers": "F1-score, strategy cumulative return, stage grouping",
+    "source_data_paths": "outputs/tables/lstm_metrics.csv; outputs/tables/lstm_rolling_metrics.csv; outputs/tables/dual_branch_metrics.csv",
+    "output_targets": "outputs/figures/lstm_fig1_model_progress.svg/png/pdf",
+    "failure_signal": "若双分支模型 F1 和策略收益均未改善，则深度结构扩展缺少实证收益。"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "figure_id": "fig_pca_biplot",
+  "contract": {
+    "figure_id": "fig_pca_biplot",
+    "purpose": "展示年度绩效样本在 PC1-PC2 空间中的二维结构，并解释主要指标驱动",
+    "core_conclusion": "高位表现期沿收入、净利润和 ROE 方向聚集，近期调整期从高绩效区域回落",
+    "chart_type": "PCA biplot",
+    "evidence_layers": "year coordinates, period stage colors, indicator loading arrows",
+    "source_data_paths": "data/processed/standardized_matrix.csv; outputs/tables/topsis_scores.csv",
+    "output_targets": "outputs/figures/pca_2d_biplot.png/svg/pdf",
+    "failure_signal": "若前两主成分解释率过低或载荷方向无法解释绩效分层，则二维图不适合作为主证据"
+  },
+  "metrics": {
+    "pca_pc1_variance_ratio": 0.6459792510251549,
+    "pca_pc2_variance_ratio": 0.14587919896248497,
+    "pca_pc1_pc2_cumulative_variance_ratio": 0.7918584499876398,
+    "pca_topsis_pearson_corr": 0.9641219781198915,
+    "pca_topsis_spearman_corr": 0.9318181818181819,
+    "top5_overlap_count": 5,
+    "latest_year": 2025,
+    "latest_topsis_rank": 7,
+    "latest_pca_rank": 6
+  },
+  "source_data_paths": [
+    "data/processed/standardized_matrix.csv",
+    "outputs/tables/topsis_scores.csv"
+  ],
+  "generation_script": "src/pca_robustness.py"
+}

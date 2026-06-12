@@ -1,0 +1,24 @@
+{
+  "figure_id": "lstm_fig3_shap_explainability",
+  "generated_at": "2026-06-12T12:35:51",
+  "script": "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\src\\generate_lstm_full_report.py",
+  "source_data_paths": "outputs/tables/shap_importance.csv; outputs/tables/shap_proxy_metrics.csv",
+  "plot_data_paths": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\tables\\plot_data_lstm_shap_importance.csv"
+  ],
+  "output_targets": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig3_shap_explainability.svg",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig3_shap_explainability.png",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig3_shap_explainability.pdf"
+  ],
+  "contract": {
+    "figure_id": "lstm_fig3_shap_explainability",
+    "purpose": "解释融合预测模型中哪些特征贡献最大",
+    "core_conclusion": "PEG、布林带宽度、均线、波动率和指数收益等特征贡献靠前，短期方向更依赖估值与市场技术状态。",
+    "chart_type": "horizontal SHAP importance bar chart",
+    "evidence_layers": "top mean absolute SHAP features, feature category colors",
+    "source_data_paths": "outputs/tables/shap_importance.csv; outputs/tables/shap_proxy_metrics.csv",
+    "output_targets": "outputs/figures/lstm_fig3_shap_explainability.svg/png/pdf",
+    "failure_signal": "若财务/TOPSIS 特征贡献很低，应避免夸大经营绩效对短期股价方向的即时解释力。"
+  }
+}

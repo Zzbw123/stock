@@ -1,0 +1,29 @@
+{
+  "figure_id": "fig_pca_robustness",
+  "contract": {
+    "figure_id": "fig_pca_robustness",
+    "purpose": "检验 PCA 综合得分是否支持 TOPSIS 绩效排序结论",
+    "core_conclusion": "PCA 与 TOPSIS 得分高度一致，Spearman 相关系数为 0.932",
+    "chart_type": "scatter with reference trend",
+    "evidence_layers": "PCA score, TOPSIS score, year labels for recent and top-score years",
+    "source_data_paths": "data/processed/standardized_matrix.csv; outputs/tables/topsis_scores.csv",
+    "output_targets": "outputs/figures/pca_topsis_robustness.png/svg/pdf",
+    "failure_signal": "若相关系数低或近期年份排名方向相反，则 TOPSIS 结论对降维方法不稳健"
+  },
+  "metrics": {
+    "pca_pc1_variance_ratio": 0.6459792510251549,
+    "pca_pc2_variance_ratio": 0.14587919896248497,
+    "pca_pc1_pc2_cumulative_variance_ratio": 0.7918584499876398,
+    "pca_topsis_pearson_corr": 0.9641219781198915,
+    "pca_topsis_spearman_corr": 0.9318181818181819,
+    "top5_overlap_count": 5,
+    "latest_year": 2025,
+    "latest_topsis_rank": 7,
+    "latest_pca_rank": 6
+  },
+  "source_data_paths": [
+    "data/processed/standardized_matrix.csv",
+    "outputs/tables/topsis_scores.csv"
+  ],
+  "generation_script": "src/pca_robustness.py"
+}

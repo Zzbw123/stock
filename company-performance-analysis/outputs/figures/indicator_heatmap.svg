@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="562.036927pt" height="500.043425pt" viewBox="0 0 562.036927 500.043425" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-11T20:59:22.795333</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 500.043425 
+L 562.036927 500.043425 
+L 562.036927 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 47.7625 422.02425 
+L 471.8425 422.02425 
+L 471.8425 22.85625 
+L 47.7625 22.85625 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g clip-path="url(#p49a5d016a9)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAk4AAAIrCAYAAAAZYBYcAAAQYUlEQVR4nO3YzY9d50HH8efce+7MeMZvcfxuk9auwFZSFyUIWkQJUimURUEgIRVYsEmpYNWKRbf9D2BZ1CAhqAQUgSrEiyhCSIUW0UKRqCpaGiWImsROYsUJtsdjz5170Dj/wG8R6XmY5/NZ38VP55x77vc+w3s+9LmpdO5bX7pWe0ITPvm1+6V3f/0bX609oQm/8rs/WntCEz77S39UenfyJ3+m9oQmvPC5q6V355/8fO0JTZjVHgAA8P+FcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACI3bN/+79O6Zz1+pPaEJe8t56d3d7ZdrT2jCF/7kXu0JTdhdug43vvRntW9DE1bTp0vvVtOy9oQmOHECAAgJJwCAkHACAAgJJwCAkHACAAgJJwCAkHACAAgJJwCAkHACAAgJJwCAkHACAAgJJwCAkHACAAgJJwCAkHACAAgJJwCA0Hj7zould7c/89naE5pw/tmfK72bpqn2hCbM/957Yd/mxunSu2Mf/LHaE5pwc/t66d1qtaw9oQlOnAAAQsIJACAknAAAQsIJACAknAAAQsIJACAknAAAQsIJACAknAAAQsIJACAknAAAQsIJACAknAAAQsIJACAknAAAQuPFcz9eend/+7XaE5ow3N4pvXuw+1btCU3YWz2sPaEJ64sjpXezW/drT2jCcjpUe0J906r2giY4cQIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAICQcAIACAknAIDQuHftVOndoZcWtSe04c0HtRc0YKg9oAnbO7dqT2jCsWOXSu/2LhyuPaEJd3a9G3ibEycAgJBwAgAICScAgJBwAgAICScAgJBwAgAICScAgJBwAgAICScAgJBwAgAICScAgJBwAgAICScAgJBwAgAICScAgJBwAgAIjWsfOFN6t3N6s/aEJsz+5juld+N8o/aEJuw8vF17QhOOnnqq9G79h0/VntCEY2tvlt6tpmXtCU1w4gQAEBJOAAAh4QQAEBJOAAAh4QQAEBJOAAAh4QQAEBJOAAAh4QQAEBJOAAAh4QQAEBJ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" id="image3cdb16e2af" transform="scale(1 -1) translate(0 -399.6)" x="47.7625" y="-22.42425" width="424.8" height="399.6"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 71.3225 422.02425 
+L 71.3225 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(34.491142 463.906795) rotate(-35)">营业收入</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <path d="M 118.4425 422.02425 
+L 118.4425 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(90.621815 457.773444) rotate(-35)">净利润</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <path d="M 165.5625 422.02425 
+L 165.5625 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(151.257824 447.183099) rotate(-35)">ROE</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <path d="M 212.6825 422.02425 
+L 212.6825 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(184.861815 457.562256) rotate(-35)">毛利率</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <path d="M 259.8025 422.02425 
+L 259.8025 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(231.981815 457.738246) rotate(-35)">净利率</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <path d="M 306.9225 422.02425 
+L 306.9225 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(261.08047 470.356927) rotate(-35)">资产负债率</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <path d="M 354.0425 422.02425 
+L 354.0425 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(317.211142 464.012389) rotate(-35)">流动比率</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <path d="M 401.1625 422.02425 
+L 401.1625 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(355.32047 470.216136) rotate(-35)">营收增长率</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_9">
+      <path d="M 448.2825 422.02425 
+L 448.2825 22.85625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'SimHei'; fill: #262626" transform="translate(393.429797 476.701466) rotate(-35)">净利润增长率</text>
+     </g>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="259.8025" y="491.343425" transform="rotate(-0 259.8025 491.343425)">标准化指标（数值越高越好）</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_10">
+      <path d="M 47.7625 28.90425 
+L 471.8425 28.90425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="31.65425" transform="rotate(-0 38.2625 31.65425)">1993</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_11">
+      <path d="M 47.7625 41.00025 
+L 471.8425 41.00025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="43.75025" transform="rotate(-0 38.2625 43.75025)">1994</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_12">
+      <path d="M 47.7625 53.09625 
+L 471.8425 53.09625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="55.84625" transform="rotate(-0 38.2625 55.84625)">1995</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <path d="M 47.7625 65.19225 
+L 471.8425 65.19225 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="67.94225" transform="rotate(-0 38.2625 67.94225)">1996</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_14">
+      <path d="M 47.7625 77.28825 
+L 471.8425 77.28825 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="80.03825" transform="rotate(-0 38.2625 80.03825)">1997</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_15">
+      <path d="M 47.7625 89.38425 
+L 471.8425 89.38425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="92.13425" transform="rotate(-0 38.2625 92.13425)">1998</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_16">
+      <path d="M 47.7625 101.48025 
+L 471.8425 101.48025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="104.23025" transform="rotate(-0 38.2625 104.23025)">1999</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_17">
+      <path d="M 47.7625 113.57625 
+L 471.8425 113.57625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="116.32625" transform="rotate(-0 38.2625 116.32625)">2000</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_18">
+      <path d="M 47.7625 125.67225 
+L 471.8425 125.67225 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_19">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="128.42225" transform="rotate(-0 38.2625 128.42225)">2001</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_19">
+      <path d="M 47.7625 137.76825 
+L 471.8425 137.76825 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="140.51825" transform="rotate(-0 38.2625 140.51825)">2002</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_20">
+      <path d="M 47.7625 149.86425 
+L 471.8425 149.86425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="152.61425" transform="rotate(-0 38.2625 152.61425)">2003</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_21">
+      <path d="M 47.7625 161.96025 
+L 471.8425 161.96025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="164.71025" transform="rotate(-0 38.2625 164.71025)">2004</text>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_22">
+      <path d="M 47.7625 174.05625 
+L 471.8425 174.05625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="176.80625" transform="rotate(-0 38.2625 176.80625)">2005</text>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_23">
+      <path d="M 47.7625 186.15225 
+L 471.8425 186.15225 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="188.90225" transform="rotate(-0 38.2625 188.90225)">2006</text>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_24">
+      <path d="M 47.7625 198.24825 
+L 471.8425 198.24825 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="200.99825" transform="rotate(-0 38.2625 200.99825)">2007</text>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_25">
+      <path d="M 47.7625 210.34425 
+L 471.8425 210.34425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="213.09425" transform="rotate(-0 38.2625 213.09425)">2008</text>
+     </g>
+    </g>
+    <g id="ytick_17">
+     <g id="line2d_26">
+      <path d="M 47.7625 222.44025 
+L 471.8425 222.44025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="225.19025" transform="rotate(-0 38.2625 225.19025)">2009</text>
+     </g>
+    </g>
+    <g id="ytick_18">
+     <g id="line2d_27">
+      <path d="M 47.7625 234.53625 
+L 471.8425 234.53625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="237.28625" transform="rotate(-0 38.2625 237.28625)">2010</text>
+     </g>
+    </g>
+    <g id="ytick_19">
+     <g id="line2d_28">
+      <path d="M 47.7625 246.63225 
+L 471.8425 246.63225 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="249.38225" transform="rotate(-0 38.2625 249.38225)">2011</text>
+     </g>
+    </g>
+    <g id="ytick_20">
+     <g id="line2d_29">
+      <path d="M 47.7625 258.72825 
+L 471.8425 258.72825 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_30">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="261.47825" transform="rotate(-0 38.2625 261.47825)">2012</text>
+     </g>
+    </g>
+    <g id="ytick_21">
+     <g id="line2d_30">
+      <path d="M 47.7625 270.82425 
+L 471.8425 270.82425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_31">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="273.57425" transform="rotate(-0 38.2625 273.57425)">2013</text>
+     </g>
+    </g>
+    <g id="ytick_22">
+     <g id="line2d_31">
+      <path d="M 47.7625 282.92025 
+L 471.8425 282.92025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_32">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="285.67025" transform="rotate(-0 38.2625 285.67025)">2014</text>
+     </g>
+    </g>
+    <g id="ytick_23">
+     <g id="line2d_32">
+      <path d="M 47.7625 295.01625 
+L 471.8425 295.01625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_33">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="297.76625" transform="rotate(-0 38.2625 297.76625)">2015</text>
+     </g>
+    </g>
+    <g id="ytick_24">
+     <g id="line2d_33">
+      <path d="M 47.7625 307.11225 
+L 471.8425 307.11225 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_34">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="309.86225" transform="rotate(-0 38.2625 309.86225)">2016</text>
+     </g>
+    </g>
+    <g id="ytick_25">
+     <g id="line2d_34">
+      <path d="M 47.7625 319.20825 
+L 471.8425 319.20825 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_35">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="321.95825" transform="rotate(-0 38.2625 321.95825)">2017</text>
+     </g>
+    </g>
+    <g id="ytick_26">
+     <g id="line2d_35">
+      <path d="M 47.7625 331.30425 
+L 471.8425 331.30425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_36">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="334.05425" transform="rotate(-0 38.2625 334.05425)">2018</text>
+     </g>
+    </g>
+    <g id="ytick_27">
+     <g id="line2d_36">
+      <path d="M 47.7625 343.40025 
+L 471.8425 343.40025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_37">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="346.15025" transform="rotate(-0 38.2625 346.15025)">2019</text>
+     </g>
+    </g>
+    <g id="ytick_28">
+     <g id="line2d_37">
+      <path d="M 47.7625 355.49625 
+L 471.8425 355.49625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_38">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="358.24625" transform="rotate(-0 38.2625 358.24625)">2020</text>
+     </g>
+    </g>
+    <g id="ytick_29">
+     <g id="line2d_38">
+      <path d="M 47.7625 367.59225 
+L 471.8425 367.59225 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_39">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="370.34225" transform="rotate(-0 38.2625 370.34225)">2021</text>
+     </g>
+    </g>
+    <g id="ytick_30">
+     <g id="line2d_39">
+      <path d="M 47.7625 379.68825 
+L 471.8425 379.68825 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_40">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="382.43825" transform="rotate(-0 38.2625 382.43825)">2022</text>
+     </g>
+    </g>
+    <g id="ytick_31">
+     <g id="line2d_40">
+      <path d="M 47.7625 391.78425 
+L 471.8425 391.78425 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_41">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="394.53425" transform="rotate(-0 38.2625 394.53425)">2023</text>
+     </g>
+    </g>
+    <g id="ytick_32">
+     <g id="line2d_41">
+      <path d="M 47.7625 403.88025 
+L 471.8425 403.88025 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_42">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="406.63025" transform="rotate(-0 38.2625 406.63025)">2024</text>
+     </g>
+    </g>
+    <g id="ytick_33">
+     <g id="line2d_42">
+      <path d="M 47.7625 415.97625 
+L 471.8425 415.97625 
+" clip-path="url(#p49a5d016a9)" style="fill: none; stroke: #cccccc; stroke-linecap: round"/>
+     </g>
+     <g id="text_43">
+      <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="38.2625" y="418.72625" transform="rotate(-0 38.2625 418.72625)">2025</text>
+     </g>
+    </g>
+    <g id="text_44">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="16.7625" y="222.44025" transform="rotate(-90 16.7625 222.44025)">年份</text>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 47.7625 422.02425 
+L 47.7625 22.85625 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 471.8425 422.02425 
+L 471.8425 22.85625 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 47.7625 422.02425 
+L 471.8425 422.02425 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 47.7625 22.85625 
+L 471.8425 22.85625 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="259.8025" y="16.85625" transform="rotate(-0 259.8025 16.85625)">指标热力图：高位年份呈现多指标同步改善</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 498.3475 378.11577 
+L 513.915052 378.11577 
+L 513.915052 66.76473 
+L 498.3475 66.76473 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3"/>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_34">
+     <g id="line2d_43">
+      <defs>
+       <path id="m4dcb3cc40d" d="M 0 0 
+L 6 0 
+" style="stroke: #262626; stroke-width: 1.25"/>
+      </defs>
+      <g>
+       <use xlink:href="#m4dcb3cc40d" x="513.915052" y="378.11577" style="fill: #262626; stroke: #262626; stroke-width: 1.25"/>
+      </g>
+     </g>
+     <g id="text_46">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="523.415052" y="381.89702" transform="rotate(-0 523.415052 381.89702)">0.0</text>
+     </g>
+    </g>
+    <g id="ytick_35">
+     <g id="line2d_44">
+      <g>
+       <use xlink:href="#m4dcb3cc40d" x="513.915052" y="315.845562" style="fill: #262626; stroke: #262626; stroke-width: 1.25"/>
+      </g>
+     </g>
+     <g id="text_47">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="523.415052" y="319.626812" transform="rotate(-0 523.415052 319.626812)">0.2</text>
+     </g>
+    </g>
+    <g id="ytick_36">
+     <g id="line2d_45">
+      <g>
+       <use xlink:href="#m4dcb3cc40d" x="513.915052" y="253.575354" style="fill: #262626; stroke: #262626; stroke-width: 1.25"/>
+      </g>
+     </g>
+     <g id="text_48">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="523.415052" y="257.356604" transform="rotate(-0 523.415052 257.356604)">0.4</text>
+     </g>
+    </g>
+    <g id="ytick_37">
+     <g id="line2d_46">
+      <g>
+       <use xlink:href="#m4dcb3cc40d" x="513.915052" y="191.305146" style="fill: #262626; stroke: #262626; stroke-width: 1.25"/>
+      </g>
+     </g>
+     <g id="text_49">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="523.415052" y="195.086396" transform="rotate(-0 523.415052 195.086396)">0.6</text>
+     </g>
+    </g>
+    <g id="ytick_38">
+     <g id="line2d_47">
+      <g>
+       <use xlink:href="#m4dcb3cc40d" x="513.915052" y="129.034938" style="fill: #262626; stroke: #262626; stroke-width: 1.25"/>
+      </g>
+     </g>
+     <g id="text_50">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="523.415052" y="132.816188" transform="rotate(-0 523.415052 132.816188)">0.8</text>
+     </g>
+    </g>
+    <g id="ytick_39">
+     <g id="line2d_48">
+      <g>
+       <use xlink:href="#m4dcb3cc40d" x="513.915052" y="66.76473" style="fill: #262626; stroke: #262626; stroke-width: 1.25"/>
+      </g>
+     </g>
+     <g id="text_51">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="523.415052" y="70.54598" transform="rotate(-0 523.415052 70.54598)">1.0</text>
+     </g>
+    </g>
+    <g id="text_52">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="553.336927" y="222.44025" transform="rotate(-90 553.336927 222.44025)">标准化值</text>
+    </g>
+   </g>
+   <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAABYAAAGxCAYAAABm2kbZAAACqElEQVR4nO2dwY3kQAwDaaHzz++CmeY9dmBMAvUoQAyg0BAltuxdjJ/2XwNoAuk0yIHDnTi5DLj1laIIeHTtdqiuGIQaZbtV126h2q26dovOvEIDcoSlyLbbnzY21StWbJMX3Ymr2yuy7fbVDsir0+6dZ93ojzE2LwIehJo170cHuvLCmXcpcCHwQNwIzauwxg8Ejm7yyoCHwYar8dnJ86bboW6QgbjZduPzeBBqNujdd14h8EDcbFa82oVF3G7HOHkPAh7hs3QZ8DDYONstDPgy3OyTqflqutSLkI+wFEE0vqC/ujvv4zOvMvAw2BhP/KFi8+pKcX0njqwrBqHGaV4Z8PiC/iMsxYOAR2heGA3EjXLyHgocRMNg48yKuMDDYGOMzQ8EHoibbTdzu10MXAY8DDbKP1eUAofRQNwI2+1iK1YYDcSN0rxQ4AcBD0LNtps8K4pws+32arPi1V5Nr3bbFGfFEcZmd6/405on3o/Hd0tXV4ruib0/gVCfeZcClwEPg40xNrux6W23Qv02CDXbbj/arFBPXhnwGG/pIuBBqHGaVwh8txTmyQuiYbBxnrgIeBBqdsX60bnQ5A2DTQ70Y2k50T0qRDd5D1TjQ3XFMNgo2+1i5lVXitgmr74a1wUehJodEHtWFAEPQs3e0m7zgn0J4upKcRnw6G7pIzSvuhNfBjwMNrvRqwfk2RchXvOCmVddKa7uxMXARcCje1QYhJo1T76w1NdupcBBNAw2zqAvBQ6iYbAxmveseV7zsivWV2ueOujvTp436C/Cja+Pxzh5QTQMNkbzCv3j5vF9w7tr3lcnwq+DXgQ8uskbhJrNCrt5pcAXAQ9CzWaF27xs0HvNq+/E2Y3ea151Jw71OFZdKWo7cTjzioAHoUZpXvdFyFc+8/4DMf/k656WHP0AAAAASUVORK5CYII=" id="image54a5930839" transform="scale(1 -1) translate(0 -311.76)" x="498.24" y="-66.24" width="15.84" height="311.76"/>
+   <g id="LineCollection_1"/>
+   <g id="patch_8">
+    <path d="M 498.3475 378.11577 
+L 506.131276 378.11577 
+L 513.915052 378.11577 
+L 513.915052 66.76473 
+L 506.131276 66.76473 
+L 498.3475 66.76473 
+L 498.3475 378.11577 
+z
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p49a5d016a9">
+   <rect x="47.7625" y="22.85625" width="424.08" height="399.168"/>
+  </clipPath>
+ </defs>
+</svg>

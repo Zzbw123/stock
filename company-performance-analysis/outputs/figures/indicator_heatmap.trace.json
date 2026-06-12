@@ -1,0 +1,22 @@
+{
+  "figure_id": "fig_indicator_heatmap",
+  "contract": {
+    "figure_id": "fig_indicator_heatmap",
+    "purpose": "展示各年度在所有标准化指标上的强弱结构",
+    "core_conclusion": "2021-2023 年多项指标同步处于高位，2025 年主要在净利润、ROE 和净利率上明显转弱",
+    "chart_type": "heatmap",
+    "evidence_layers": "year by indicator standardized matrix",
+    "source_data_paths": "data/processed/standardized_matrix.csv",
+    "output_targets": "outputs/figures/indicator_heatmap.png/svg/pdf",
+    "failure_signal": "若高绩效年份没有形成成片高值区域，则综合得分缺少多指标共振证据"
+  },
+  "metrics": {
+    "sensitivity_min_spearman": 0.9608957219251338,
+    "sensitivity_latest_rank_max_abs_change": 2,
+    "sensitivity_min_top5_overlap": 4
+  },
+  "source_data_paths": [
+    "data/processed/standardized_matrix.csv"
+  ],
+  "generation_script": "src/advanced_visualizations.py"
+}

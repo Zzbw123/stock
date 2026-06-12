@@ -1,0 +1,25 @@
+{
+  "figure_id": "fig_entropy_vs_pca_loading",
+  "contract": {
+    "figure_id": "fig_entropy_vs_pca_loading",
+    "purpose": "比较熵权法和 PCA 对关键指标重要性的判断是否一致",
+    "core_conclusion": "熵权与 PC1 载荷的秩相关为 0.467，两种方法均强调规模与利润指标",
+    "chart_type": "scatter with labels",
+    "evidence_layers": "entropy weights and absolute PC1 loadings by indicator",
+    "source_data_paths": "outputs/tables/entropy_weights.csv; outputs/tables/plot_data_pca_loadings.csv",
+    "output_targets": "outputs/figures/entropy_vs_pca_loading.png/svg/pdf",
+    "failure_signal": "若两种方法的重要性排序完全背离，则综合评价解释需要谨慎"
+  },
+  "metrics": {
+    "sensitivity_min_spearman": 0.9608957219251338,
+    "sensitivity_latest_rank_max_abs_change": 2,
+    "sensitivity_min_top5_overlap": 4,
+    "degradation_total_weighted_change_2023_to_latest": -0.35778882416385427,
+    "entropy_weight_vs_abs_pc1_loading_spearman": 0.4666666666666666
+  },
+  "source_data_paths": [
+    "outputs/tables/entropy_weights.csv",
+    "outputs/tables/plot_data_pca_loadings.csv"
+  ],
+  "generation_script": "src/advanced_visualizations.py"
+}

@@ -1,0 +1,166 @@
+- generic [ref=e2]:
+  - generic [ref=e11]:
+    - generic [ref=e13]:
+      - paragraph [ref=e17]: 导入财务数据 CSV/XLSX
+      - region "导入财务数据 CSV/XLSX" [ref=e18] [cursor=pointer]:
+        - button "Choose File" [ref=e19]
+        - button "upload Upload" [ref=e21]:
+          - generic [ref=e23]:
+            - generic [ref=e25]: upload
+            - paragraph [ref=e27]: Upload
+        - generic [ref=e30]: 200MB per file • CSV, XLSX, XLS
+    - generic [ref=e33] [cursor=pointer]:
+      - checkbox "使用已生成的真实数据" [checked]
+      - paragraph [ref=e38]: 使用已生成的真实数据
+  - generic [ref=e3]:
+    - banner [ref=e41]:
+      - generic [ref=e44]:
+        - button "Deploy" [ref=e46] [cursor=pointer]:
+          - generic [ref=e48]: Deploy
+        - button "Main menu" [ref=e50] [cursor=pointer]:
+          - img [ref=e51]
+    - generic [ref=e54]:
+      - heading "长春高新经营绩效评价与股价趋势预测" [level=1] [ref=e59]:
+        - text: 长春高新经营绩效评价与股价趋势预测
+        - generic [ref=e60]:
+          - link "Link to heading":
+            - /url: "#b41cec8e"
+            - img
+      - generic [ref=e62]:
+        - generic [ref=e67]:
+          - paragraph [ref=e70]: 最新期间
+          - paragraph [ref=e73]: "2025"
+        - generic [ref=e78]:
+          - paragraph [ref=e81]: TOPSIS 得分
+          - paragraph [ref=e84]: "0.461"
+        - generic [ref=e89]:
+          - paragraph [ref=e92]: 绩效排名
+          - paragraph [ref=e95]: "7"
+        - generic [ref=e100]:
+          - paragraph [ref=e103]: 评价指标数
+          - paragraph [ref=e106]: "9"
+      - generic [ref=e108]:
+        - tablist [ref=e110]:
+          - tab "经营趋势" [ref=e111] [cursor=pointer]:
+            - paragraph [ref=e113]: 经营趋势
+          - tab "权重与排名" [ref=e114] [cursor=pointer]:
+            - paragraph [ref=e116]: 权重与排名
+          - tab "LSTM预测" [active] [selected] [ref=e117] [cursor=pointer]:
+            - paragraph [ref=e119]: LSTM预测
+          - tab "数据表" [ref=e120] [cursor=pointer]:
+            - paragraph [ref=e122]: 数据表
+        - tabpanel "LSTM预测" [ref=e559]:
+          - generic [ref=e560]:
+            - heading "模型指标对比" [level=3] [ref=e565]:
+              - text: 模型指标对比
+              - generic [ref=e566]:
+                - link "Link to heading":
+                  - /url: "#2124aa4d"
+                  - img
+            - generic [ref=e571]:
+              - button "Show/hide columns" [ref=e575] [cursor=pointer]:
+                - img [ref=e576]
+              - button "Download as CSV" [ref=e581] [cursor=pointer]:
+                - img [ref=e582]
+              - button "Search" [ref=e587] [cursor=pointer]:
+                - img [ref=e588]
+              - button "Fullscreen" [ref=e593] [cursor=pointer]:
+                - img [ref=e594]
+            - generic [ref=e607]:
+              - generic [ref=e609]:
+                - button "Show data" [ref=e612] [cursor=pointer]:
+                  - img [ref=e613]
+                - button "Fullscreen" [ref=e618] [cursor=pointer]:
+                  - img [ref=e619]
+              - generic [ref=e622]:
+                - generic "Vega visualization" [ref=e623]:
+                  - img [ref=e624]:
+                    - generic [ref=e629]:
+                      - 'generic "X-axis for a discrete scale with 3 values: base, fusion, naive_momentum" [ref=e633]':
+                        - generic [ref=e635]:
+                          - generic:
+                            - generic: base
+                            - generic: fusion
+                            - generic: naive_momentum
+                      - generic "Y-axis for a linear scale with values from 0.0 to 2.6" [ref=e636]:
+                        - generic [ref=e638]:
+                          - generic:
+                            - generic: "0.0"
+                            - generic: "0.5"
+                            - generic: "1.0"
+                            - generic: "1.5"
+                            - generic: "2.0"
+                            - generic: "2.5"
+                      - generic [ref=e639]:
+                        - 'generic "model: base; value -- streamlit-generated: 0.54132231405; : Accuracy; value: 0.54132231405; color: Accuracy" [ref=e640]'
+                        - 'generic "model: fusion; value -- streamlit-generated: 0.45041322314; : Accuracy; value: 0.45041322314; color: Accuracy" [ref=e641]'
+                        - 'generic "model: naive_momentum; value -- streamlit-generated: 0.51652892562; : Accuracy; value: 0.51652892562; color: Accuracy" [ref=e642]'
+                        - 'generic "model: base; value -- streamlit-generated: 0.535564853556; : F1-score; value: 0.535564853556; color: F1-score" [ref=e643]'
+                        - 'generic "model: fusion; value -- streamlit-generated: 0.616714697406; : F1-score; value: 0.616714697406; color: F1-score" [ref=e644]'
+                        - 'generic "model: naive_momentum; value -- streamlit-generated: 0.450704225352; : F1-score; value: 0.450704225352; color: F1-score" [ref=e645]'
+                        - 'generic "model: base; value -- streamlit-generated: 0.492307692308; : Precision; value: 0.492307692308; color: Precision" [ref=e646]'
+                        - 'generic "model: fusion; value -- streamlit-generated: 0.449579831933; : Precision; value: 0.449579831933; color: Precision" [ref=e647]'
+                        - 'generic "model: naive_momentum; value -- streamlit-generated: 0.461538461538; : Precision; value: 0.461538461538; color: Precision" [ref=e648]'
+                        - 'generic "model: base; value -- streamlit-generated: 0.587155963303; : Recall; value: 0.587155963303; color: Recall" [ref=e649]'
+                        - 'generic "model: fusion; value -- streamlit-generated: 0.981651376147; : Recall; value: 0.981651376147; color: Recall" [ref=e650]'
+                        - 'generic "model: naive_momentum; value -- streamlit-generated: 0.440366972477; : Recall; value: 0.440366972477; color: Recall" [ref=e651]'
+                      - 'generic "Symbol legend titled '' '' for fill color with 4 values: Accuracy, F1-score, Precision, Recall" [ref=e652]':
+                        - generic [ref=e658]:
+                          - generic [ref=e660]:
+                            - generic:
+                              - generic: Accuracy
+                          - generic [ref=e662]:
+                            - generic:
+                              - generic: F1-score
+                          - generic [ref=e664]:
+                            - generic:
+                              - generic: Precision
+                          - generic [ref=e666]:
+                            - generic:
+                              - generic: Recall
+                - group "Click to view actions":
+                  - img [ref=e668] [cursor=pointer]
+            - heading "预测与回测图" [level=3] [ref=e676]:
+              - text: 预测与回测图
+              - generic [ref=e677]:
+                - link "Link to heading":
+                  - /url: "#3a8d4823"
+                  - img
+            - generic [ref=e679]:
+              - generic [ref=e681]:
+                - generic [ref=e684]:
+                  - button "Fullscreen" [ref=e689] [cursor=pointer]:
+                    - img [ref=e690]
+                  - img "0" [ref=e695]
+                - generic [ref=e698]:
+                  - button "Fullscreen" [ref=e703] [cursor=pointer]:
+                    - img [ref=e704]
+                  - img "0" [ref=e709]
+                - generic [ref=e712]:
+                  - button "Fullscreen" [ref=e717] [cursor=pointer]:
+                    - img [ref=e718]
+                  - img "0" [ref=e723]
+              - generic [ref=e725]:
+                - generic [ref=e728]:
+                  - button "Fullscreen" [ref=e733] [cursor=pointer]:
+                    - img [ref=e734]
+                  - img "0" [ref=e739]
+                - generic [ref=e742]:
+                  - button "Fullscreen" [ref=e747] [cursor=pointer]:
+                    - img [ref=e748]
+                  - img "0" [ref=e753]
+            - heading "预测结果明细" [level=3] [ref=e758]:
+              - text: 预测结果明细
+              - generic [ref=e759]:
+                - link "Link to heading":
+                  - /url: "#58865769"
+                  - img
+            - generic [ref=e764]:
+              - button "Show/hide columns" [ref=e768] [cursor=pointer]:
+                - img [ref=e769]
+              - button "Download as CSV" [ref=e774] [cursor=pointer]:
+                - img [ref=e775]
+              - button "Search" [ref=e780] [cursor=pointer]:
+                - img [ref=e781]
+              - button "Fullscreen" [ref=e786] [cursor=pointer]:
+                - img [ref=e787]

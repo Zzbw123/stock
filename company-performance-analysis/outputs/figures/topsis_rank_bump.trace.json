@@ -1,0 +1,26 @@
+{
+  "figure_id": "fig_rank_bump",
+  "contract": {
+    "figure_id": "fig_rank_bump",
+    "purpose": "展示年度 TOPSIS 排名随时间的变化轨迹",
+    "core_conclusion": "公司在 2021-2023 年排名快速上行并于 2023 年居首，2024-2025 年排名回落",
+    "chart_type": "bump/rank line chart",
+    "evidence_layers": "annual TOPSIS rank series",
+    "source_data_paths": "outputs/tables/topsis_scores.csv",
+    "output_targets": "outputs/figures/topsis_rank_bump.png/svg/pdf",
+    "failure_signal": "若排名轨迹没有明显转折，则阶段性回落叙事不足"
+  },
+  "metrics": {
+    "sensitivity_min_spearman": 0.9608957219251338,
+    "sensitivity_latest_rank_max_abs_change": 2,
+    "sensitivity_min_top5_overlap": 4,
+    "degradation_total_weighted_change_2023_to_latest": -0.35778882416385427,
+    "entropy_weight_vs_abs_pc1_loading_spearman": 0.4666666666666666,
+    "stage_high_period_median_score": 0.7829800950360987,
+    "stage_recent_period_median_score": 0.5674609573405416
+  },
+  "source_data_paths": [
+    "outputs/tables/topsis_scores.csv"
+  ],
+  "generation_script": "src/advanced_visualizations.py"
+}

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="529.8425pt" height="329.66825pt" viewBox="0 0 529.8425 329.66825" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-11T20:59:28.277566</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 329.66825 
+L 529.8425 329.66825 
+L 529.8425 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 42.7625 288.96825 
+L 522.6425 288.96825 
+L 522.6425 22.85625 
+L 42.7625 22.85625 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 50.942273 288.96825 
+L 50.942273 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="50.942273" y="306.03075" transform="rotate(-0 50.942273 306.03075)">1992</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <path d="M 105.474091 288.96825 
+L 105.474091 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="105.474091" y="306.03075" transform="rotate(-0 105.474091 306.03075)">1996</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <path d="M 160.005909 288.96825 
+L 160.005909 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="160.005909" y="306.03075" transform="rotate(-0 160.005909 306.03075)">2000</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <path d="M 214.537727 288.96825 
+L 214.537727 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="214.537727" y="306.03075" transform="rotate(-0 214.537727 306.03075)">2004</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <path d="M 269.069545 288.96825 
+L 269.069545 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="269.069545" y="306.03075" transform="rotate(-0 269.069545 306.03075)">2008</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <path d="M 323.601364 288.96825 
+L 323.601364 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="323.601364" y="306.03075" transform="rotate(-0 323.601364 306.03075)">2012</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <path d="M 378.133182 288.96825 
+L 378.133182 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="378.133182" y="306.03075" transform="rotate(-0 378.133182 306.03075)">2016</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <path d="M 432.665 288.96825 
+L 432.665 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="432.665" y="306.03075" transform="rotate(-0 432.665 306.03075)">2020</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_9">
+      <path d="M 487.196818 288.96825 
+L 487.196818 22.85625 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="487.196818" y="306.03075" transform="rotate(-0 487.196818 306.03075)">2024</text>
+     </g>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="282.7025" y="320.96825" transform="rotate(-0 282.7025 320.96825)">年份</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_10">
+      <path d="M 42.7625 27.39225 
+L 522.6425 27.39225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="31.1735" transform="rotate(-0 33.2625 31.1735)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_11">
+      <path d="M 42.7625 65.19225 
+L 522.6425 65.19225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="68.9735" transform="rotate(-0 33.2625 68.9735)">5</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_12">
+      <path d="M 42.7625 102.99225 
+L 522.6425 102.99225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="106.7735" transform="rotate(-0 33.2625 106.7735)">10</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <path d="M 42.7625 140.79225 
+L 522.6425 140.79225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="144.5735" transform="rotate(-0 33.2625 144.5735)">15</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_14">
+      <path d="M 42.7625 178.59225 
+L 522.6425 178.59225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="182.3735" transform="rotate(-0 33.2625 182.3735)">20</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_15">
+      <path d="M 42.7625 216.39225 
+L 522.6425 216.39225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="220.1735" transform="rotate(-0 33.2625 220.1735)">25</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_16">
+      <path d="M 42.7625 254.19225 
+L 522.6425 254.19225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="33.2625" y="257.9735" transform="rotate(-0 33.2625 257.9735)">30</text>
+     </g>
+    </g>
+    <g id="text_18">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="16.7625" y="155.91225" transform="rotate(-90 16.7625 155.91225)">TOPSIS 排名（越高越好）</text>
+    </g>
+   </g>
+   <g id="line2d_17">
+    <path d="M 64.575227 261.75225 
+L 78.208182 148.35225 
+L 91.841136 269.31225 
+L 105.474091 239.07225 
+L 119.107045 178.59225 
+L 132.74 133.23225 
+L 146.372955 193.71225 
+L 160.005909 186.15225 
+L 173.638864 201.27225 
+L 187.271818 216.39225 
+L 200.904773 276.87225 
+L 214.537727 246.63225 
+L 228.170682 254.19225 
+L 241.803636 223.95225 
+L 255.436591 231.51225 
+L 269.069545 208.83225 
+L 282.7025 163.47225 
+L 296.335455 171.03225 
+L 309.968409 155.91225 
+L 323.601364 118.11225 
+L 337.234318 140.79225 
+L 350.867273 125.67225 
+L 364.500227 110.55225 
+L 378.133182 102.99225 
+L 391.766136 95.43225 
+L 405.399091 87.87225 
+L 419.032045 72.75225 
+L 432.665 65.19225 
+L 446.297955 50.07225 
+L 459.930909 42.51225 
+L 473.563864 34.95225 
+L 487.196818 57.63225 
+L 500.829773 80.31225 
+" clip-path="url(#pb081a2859c)" style="fill: none; stroke: #0f766e; stroke-width: 2.2; stroke-linecap: round"/>
+    <defs>
+     <path id="ma1a66d1820" d="M 0 2.25 
+C 0.596707 2.25 1.169055 2.012926 1.59099 1.59099 
+C 2.012926 1.169055 2.25 0.596707 2.25 0 
+C 2.25 -0.596707 2.012926 -1.169055 1.59099 -1.59099 
+C 1.169055 -2.012926 0.596707 -2.25 0 -2.25 
+C -0.596707 -2.25 -1.169055 -2.012926 -1.59099 -1.59099 
+C -2.012926 -1.169055 -2.25 -0.596707 -2.25 0 
+C -2.25 0.596707 -2.012926 1.169055 -1.59099 1.59099 
+C -1.169055 2.012926 -0.596707 2.25 0 2.25 
+z
+" style="stroke: #0f766e"/>
+    </defs>
+    <g clip-path="url(#pb081a2859c)">
+     <use xlink:href="#ma1a66d1820" x="64.575227" y="261.75225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="78.208182" y="148.35225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="91.841136" y="269.31225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="105.474091" y="239.07225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="119.107045" y="178.59225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="132.74" y="133.23225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="146.372955" y="193.71225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="160.005909" y="186.15225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="173.638864" y="201.27225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="187.271818" y="216.39225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="200.904773" y="276.87225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="214.537727" y="246.63225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="228.170682" y="254.19225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="241.803636" y="223.95225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="255.436591" y="231.51225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="269.069545" y="208.83225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="282.7025" y="163.47225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="296.335455" y="171.03225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="309.968409" y="155.91225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="323.601364" y="118.11225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="337.234318" y="140.79225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="350.867273" y="125.67225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="364.500227" y="110.55225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="378.133182" y="102.99225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="391.766136" y="95.43225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="405.399091" y="87.87225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="419.032045" y="72.75225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="432.665" y="65.19225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="446.297955" y="50.07225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="459.930909" y="42.51225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="473.563864" y="34.95225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="487.196818" y="57.63225" style="fill: #0f766e; stroke: #0f766e"/>
+     <use xlink:href="#ma1a66d1820" x="500.829773" y="80.31225" style="fill: #0f766e; stroke: #0f766e"/>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 42.7625 288.96825 
+L 42.7625 22.85625 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 522.6425 288.96825 
+L 522.6425 22.85625 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 42.7625 288.96825 
+L 522.6425 288.96825 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 42.7625 22.85625 
+L 522.6425 22.85625 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="436.665" y="75.19225" transform="rotate(-0 436.665 75.19225)">2020</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="450.297955" y="60.07225" transform="rotate(-0 450.297955 60.07225)">2021</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="463.930909" y="52.51225" transform="rotate(-0 463.930909 52.51225)">2022</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="477.563864" y="44.95225" transform="rotate(-0 477.563864 44.95225)">2023</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="491.196818" y="67.63225" transform="rotate(-0 491.196818 67.63225)">2024</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="504.829773" y="90.31225" transform="rotate(-0 504.829773 90.31225)">2025</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="282.7025" y="16.85625" transform="rotate(-0 282.7025 16.85625)">排名轨迹：2023 达到样本第一后转入回落</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb081a2859c">
+   <rect x="42.7625" y="22.85625" width="479.88" height="266.112"/>
+  </clipPath>
+ </defs>
+</svg>

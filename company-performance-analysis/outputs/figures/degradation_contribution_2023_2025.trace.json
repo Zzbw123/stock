@@ -1,0 +1,24 @@
+{
+  "figure_id": "fig_degradation_contribution",
+  "contract": {
+    "figure_id": "fig_degradation_contribution",
+    "purpose": "拆解 2023 高点到最新年度的综合绩效下降来源",
+    "core_conclusion": "净利润、ROE、净利率和营收规模回落是 2025 年相对 2023 年退化的主要来源",
+    "chart_type": "diverging horizontal bar",
+    "evidence_layers": "standardized indicator change weighted by entropy weights",
+    "source_data_paths": "data/processed/standardized_matrix.csv; outputs/tables/entropy_weights.csv",
+    "output_targets": "outputs/figures/degradation_contribution_2023_2025.png/svg/pdf",
+    "failure_signal": "若贡献分散且无主要负向指标，则退化结论不能归因到利润与回报指标"
+  },
+  "metrics": {
+    "sensitivity_min_spearman": 0.9608957219251338,
+    "sensitivity_latest_rank_max_abs_change": 2,
+    "sensitivity_min_top5_overlap": 4,
+    "degradation_total_weighted_change_2023_to_latest": -0.35778882416385427
+  },
+  "source_data_paths": [
+    "data/processed/standardized_matrix.csv",
+    "outputs/tables/entropy_weights.csv"
+  ],
+  "generation_script": "src/advanced_visualizations.py"
+}

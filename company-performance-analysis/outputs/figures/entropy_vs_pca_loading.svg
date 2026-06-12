@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="484.783523pt" height="363.026pt" viewBox="0 0 484.783523 363.026" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-11T20:59:25.752234</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 363.026 
+L 484.783523 363.026 
+L 484.783523 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 49.10625 322.326 
+L 467.60625 322.326 
+L 467.60625 22.95 
+L 49.10625 22.95 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 112.718967 322.326 
+L 112.718967 22.95 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="112.718967" y="339.3885" transform="rotate(-0 112.718967 339.3885)">0.05</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <path d="M 186.77275 322.326 
+L 186.77275 22.95 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="186.77275" y="339.3885" transform="rotate(-0 186.77275 339.3885)">0.10</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <path d="M 260.826533 322.326 
+L 260.826533 22.95 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="260.826533" y="339.3885" transform="rotate(-0 260.826533 339.3885)">0.15</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <path d="M 334.880316 322.326 
+L 334.880316 22.95 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="334.880316" y="339.3885" transform="rotate(-0 334.880316 339.3885)">0.20</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <path d="M 408.9341 322.326 
+L 408.9341 22.95 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="408.9341" y="339.3885" transform="rotate(-0 408.9341 339.3885)">0.25</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="258.35625" y="354.326" transform="rotate(-0 258.35625 354.326)">熵权法权重</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6">
+      <path d="M 49.10625 273.542438 
+L 467.60625 273.542438 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="39.60625" y="277.323688" transform="rotate(-0 39.60625 277.323688)">0.1</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7">
+      <path d="M 49.10625 211.82915 
+L 467.60625 211.82915 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="39.60625" y="215.6104" transform="rotate(-0 39.60625 215.6104)">0.2</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_8">
+      <path d="M 49.10625 150.115863 
+L 467.60625 150.115863 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="39.60625" y="153.897113" transform="rotate(-0 39.60625 153.897113)">0.3</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_9">
+      <path d="M 49.10625 88.402575 
+L 467.60625 88.402575 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="39.60625" y="92.183825" transform="rotate(-0 39.60625 92.183825)">0.4</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_10">
+      <path d="M 49.10625 26.689288 
+L 467.60625 26.689288 
+" clip-path="url(#p51e7294e27)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: round"/>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 11px; font-family: 'SimHei'; text-anchor: end; fill: #262626" x="39.60625" y="30.470538" transform="rotate(-0 39.60625 30.470538)">0.5</text>
+     </g>
+    </g>
+    <g id="text_12">
+     <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="17.5125" y="172.638" transform="rotate(-90 17.5125 172.638)">|PC1 载荷|</text>
+    </g>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="m450f2c24c4" d="M 0 4.1833 
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804 
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0 
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804 
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833 
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804 
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0 
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804 
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833 
+z
+" style="stroke: #ffffff; stroke-width: 0.8"/>
+    </defs>
+    <g clip-path="url(#p51e7294e27)">
+     <use xlink:href="#m450f2c24c4" x="448.583523" y="77.988062" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="407.217427" y="36.558" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="250.573998" y="73.871319" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="195.15668" y="308.718" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="155.815433" y="215.814738" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="153.863483" y="40.441749" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="77.121521" y="153.268154" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="72.601272" y="193.771372" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m450f2c24c4" x="68.128977" y="289.416699" style="fill: #4c78a8; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 49.10625 322.326 
+L 49.10625 22.95 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 467.60625 322.326 
+L 467.60625 22.95 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 49.10625 322.326 
+L 467.60625 322.326 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 49.10625 22.95 
+L 467.60625 22.95 
+" style="fill: none; stroke: #cccccc; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="453.583523" y="73.988062" transform="rotate(-0 453.583523 73.988062)">净利润</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="412.217427" y="32.558" transform="rotate(-0 412.217427 32.558)">营业收入</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="255.573998" y="69.871319" transform="rotate(-0 255.573998 69.871319)">流动比率</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="200.15668" y="304.718" transform="rotate(-0 200.15668 304.718)">营收增长率</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="160.815433" y="211.814738" transform="rotate(-0 160.815433 211.814738)">ROE</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="158.863483" y="36.441749" transform="rotate(-0 158.863483 36.441749)">资产负债率</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="82.121521" y="149.268154" transform="rotate(-0 82.121521 149.268154)">毛利率</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="77.601272" y="189.771372" transform="rotate(-0 77.601272 189.771372)">净利率</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="73.128977" y="285.416699" transform="rotate(-0 73.128977 285.416699)">净利润增长率</text>
+   </g>
+   <g id="text_22">
+    <g id="patch_7">
+     <path d="M 57.47625 42.049249 
+L 120.47625 42.049249 
+Q 123.17625 42.049249 123.17625 39.349249 
+L 123.17625 31.93128 
+Q 123.17625 29.23128 120.47625 29.23128 
+L 57.47625 29.23128 
+Q 54.77625 29.23128 54.77625 31.93128 
+L 54.77625 39.349249 
+Q 54.77625 42.049249 57.47625 42.049249 
+z
+" style="fill: #ffffff; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'SimHei'; text-anchor: start; fill: #262626" x="57.47625" y="38.224249" transform="rotate(-0 57.47625 38.224249)">Spearman=0.467</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 12px; font-family: 'SimHei'; text-anchor: middle; fill: #262626" x="258.35625" y="16.95" transform="rotate(-0 258.35625 16.95)">熵权与 PCA 载荷对比：规模利润指标在两种方法中都靠前</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p51e7294e27">
+   <rect x="49.10625" y="22.95" width="418.5" height="299.376"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,25 @@
+{
+  "figure_id": "lstm_fig5_walk_forward_strategy",
+  "generated_at": "2026-06-12T12:35:52",
+  "script": "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\src\\generate_lstm_full_report.py",
+  "source_data_paths": "outputs/tables/walk_forward_topk_metrics.csv; outputs/tables/walk_forward_topk_yearly_metrics.csv; outputs/tables/walk_forward_topk_backtest.csv",
+  "plot_data_paths": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\tables\\plot_data_lstm_walk_forward_yearly.csv",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\tables\\plot_data_lstm_walk_forward_curve.csv"
+  ],
+  "output_targets": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig5_walk_forward_strategy.svg",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig5_walk_forward_strategy.png",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig5_walk_forward_strategy.pdf"
+  ],
+  "contract": {
+    "figure_id": "lstm_fig5_walk_forward_strategy",
+    "purpose": "在逐年重训的样本外环境中检验模型选股信号是否稳健",
+    "core_conclusion": "最优 walk-forward Top5 组合跑赢等权基准 17.5 个百分点，但总收益仍为负，说明模型具有相对收益而非绝对收益保证。",
+    "chart_type": "annual grouped bar plus cumulative return line",
+    "evidence_layers": "yearly strategy return, yearly benchmark return, cumulative return curves",
+    "source_data_paths": "outputs/tables/walk_forward_topk_metrics.csv; outputs/tables/walk_forward_topk_yearly_metrics.csv; outputs/tables/walk_forward_topk_backtest.csv",
+    "output_targets": "outputs/figures/lstm_fig5_walk_forward_strategy.svg/png/pdf",
+    "failure_signal": "若多数年份不能跑赢等权基准，则模型不具备稳定截面排序能力。"
+  }
+}

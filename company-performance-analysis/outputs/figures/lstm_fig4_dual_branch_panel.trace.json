@@ -1,0 +1,24 @@
+{
+  "figure_id": "lstm_fig4_dual_branch_panel",
+  "generated_at": "2026-06-12T12:35:51",
+  "script": "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\src\\generate_lstm_full_report.py",
+  "source_data_paths": "outputs/tables/dual_branch_symbol_metrics.csv",
+  "plot_data_paths": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\tables\\plot_data_lstm_dual_branch_symbol_metrics.csv"
+  ],
+  "output_targets": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig4_dual_branch_panel.svg",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig4_dual_branch_panel.png",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig4_dual_branch_panel.pdf"
+  ],
+  "contract": {
+    "figure_id": "lstm_fig4_dual_branch_panel",
+    "purpose": "展示双分支 LSTM 在不同同行股票上的预测差异",
+    "core_conclusion": "药明康德、恒瑞医药等样本 F1 较高，但整体呈现高召回、低精度结构，阈值和风控仍是关键。",
+    "chart_type": "bar chart plus precision-recall scatter",
+    "evidence_layers": "symbol-level F1-score, precision, recall",
+    "source_data_paths": "outputs/tables/dual_branch_symbol_metrics.csv",
+    "output_targets": "outputs/figures/lstm_fig4_dual_branch_panel.svg/png/pdf",
+    "failure_signal": "若个股间表现差异过大，应采用分组阈值或行业/市值分层模型。"
+  }
+}

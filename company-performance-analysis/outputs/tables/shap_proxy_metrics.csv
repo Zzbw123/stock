@@ -1,0 +1,6 @@
+﻿model,metric,value
+shap_proxy_fusion,Accuracy,0.5807692307692308
+shap_proxy_fusion,Precision,0.46601941747572817
+shap_proxy_fusion,Recall,0.47058823529411764
+shap_proxy_fusion,F1-score,0.4682926829268293
+shap_proxy_fusion,DirectionHitRate,0.5807692307692308

@@ -1,0 +1,2 @@
+﻿pca_pc1_variance_ratio,pca_pc2_variance_ratio,pca_pc1_pc2_cumulative_variance_ratio,pca_topsis_pearson_corr,pca_topsis_spearman_corr,top5_overlap_count,latest_year,latest_topsis_rank,latest_pca_rank
+0.6459792510251549,0.14587919896248497,0.7918584499876398,0.9641219781198915,0.9318181818181819,5,2025,7,6

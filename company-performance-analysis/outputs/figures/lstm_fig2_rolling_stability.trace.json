@@ -1,0 +1,24 @@
+{
+  "figure_id": "lstm_fig2_rolling_stability",
+  "generated_at": "2026-06-12T12:35:51",
+  "script": "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\src\\generate_lstm_full_report.py",
+  "source_data_paths": "outputs/tables/lstm_rolling_metrics.csv",
+  "plot_data_paths": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\tables\\plot_data_lstm_rolling_stability.csv"
+  ],
+  "output_targets": [
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig2_rolling_stability.svg",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig2_rolling_stability.png",
+    "C:\\Users\\zengb\\Desktop\\股票\\company-performance-analysis\\outputs\\figures\\lstm_fig2_rolling_stability.pdf"
+  ],
+  "contract": {
+    "figure_id": "lstm_fig2_rolling_stability",
+    "purpose": "检验单股 LSTM 在滚动年份中的稳定性和失效风险",
+    "core_conclusion": "融合 LSTM 的平均 F1 略高，但不同年份策略收益波动较大，模型需要滚动验证而非单次切分。",
+    "chart_type": "two-panel line chart",
+    "evidence_layers": "yearly F1-score, yearly strategy cumulative return, model comparison",
+    "source_data_paths": "outputs/tables/lstm_rolling_metrics.csv",
+    "output_targets": "outputs/figures/lstm_fig2_rolling_stability.svg/png/pdf",
+    "failure_signal": "若年度曲线方向相反或收益长期为负，则单股模型不能直接用于交易信号。"
+  }
+}

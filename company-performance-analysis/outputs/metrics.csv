@@ -1,0 +1,25 @@
+﻿metric,value,source
+pca_pc1_variance_ratio,0.6459792510251549,PCA robustness check on standardized_matrix.csv
+pca_pc2_variance_ratio,0.1458791989624849,PCA robustness check on standardized_matrix.csv
+pca_pc1_pc2_cumulative_variance_ratio,0.7918584499876398,PCA robustness check on standardized_matrix.csv
+pca_topsis_pearson_corr,0.9641219781198916,PCA robustness check on standardized_matrix.csv
+pca_topsis_spearman_corr,0.931818181818182,PCA robustness check on standardized_matrix.csv
+top5_overlap_count,5.0,PCA robustness check on standardized_matrix.csv
+latest_year,2025.0,PCA robustness check on standardized_matrix.csv
+latest_topsis_rank,7.0,PCA robustness check on standardized_matrix.csv
+latest_pca_rank,6.0,PCA robustness check on standardized_matrix.csv
+sensitivity_min_spearman,0.9608957219251338,advanced_visualizations.py
+sensitivity_latest_rank_max_abs_change,2.0,advanced_visualizations.py
+sensitivity_min_top5_overlap,4.0,advanced_visualizations.py
+degradation_total_weighted_change_2023_to_latest,-0.3577888241638542,advanced_visualizations.py
+entropy_weight_vs_abs_pc1_loading_spearman,0.4666666666666666,advanced_visualizations.py
+stage_high_period_median_score,0.7829800950360987,advanced_visualizations.py
+stage_recent_period_median_score,0.5674609573405416,advanced_visualizations.py
+lstm_single_base_f1,0.0396039603960396,generate_lstm_full_report.py
+lstm_single_fusion_f1,0.0,generate_lstm_full_report.py
+lstm_rolling_fusion_mean_f1,0.5629734305559899,generate_lstm_full_report.py
+dual_branch_lstm_f1,0.6373396177009688,generate_lstm_full_report.py
+dual_branch_lstm_strategy_return,-0.1125600164780314,generate_lstm_full_report.py
+walk_forward_best_excess_return,0.1750702087526181,generate_lstm_full_report.py
+walk_forward_best_total_return,-0.3704645271801121,generate_lstm_full_report.py
+shap_proxy_f1,0.4682926829268293,generate_lstm_full_report.py
