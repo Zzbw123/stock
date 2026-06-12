@@ -37,8 +37,9 @@ plt.rcParams["axes.unicode_minus"] = False
 
 @dataclass
 class DualBranchConfig:
-    lstm_hidden: int = 32
-    static_hidden: int = 32
+    lstm_hidden: int = 64
+    lstm_layers: int = 2
+    static_hidden: int = 64
     dropout: float = 0.2
     lr: float = 0.001
 
@@ -175,7 +176,13 @@ def build_model(seq_dim: int, static_dim: int, config: DualBranchConfig):
     class DualBranchLSTM(nn.Module):
         def __init__(self) -> None:
             super().__init__()
-            self.lstm = nn.LSTM(input_size=seq_dim, hidden_size=config.lstm_hidden, batch_first=True)
+            self.lstm = nn.LSTM(
+                input_size=seq_dim,
+                hidden_size=config.lstm_hidden,
+                num_layers=config.lstm_layers,
+                batch_first=True,
+                dropout=config.dropout if config.lstm_layers > 1 else 0.0,
+            )
             self.static_net = nn.Sequential(
                 nn.Linear(static_dim, config.static_hidden),
                 nn.ReLU(),
@@ -208,6 +215,8 @@ def train_dual_branch(
     batch_size: int,
     seed: int,
     patience: int,
+    log_interval: int,
+    run_name: str,
 ) -> tuple[object, float, int]:
     torch, nn, DataLoader, TensorDataset = _require_torch()
     torch.manual_seed(seed)
@@ -231,14 +240,17 @@ def train_dual_branch(
     best_valid = np.inf
     best_epoch = 0
     stale_epochs = 0
-    for epoch in range(max(1, epochs)):
+    max_epochs = max(1, epochs)
+    for epoch in range(max_epochs):
         model.train()
+        train_loss = np.nan
         for seq_batch, static_batch, y_batch in loader:
             optimizer.zero_grad()
             logits = model(seq_batch, static_batch)
             loss = criterion(logits, y_batch.float())
             loss.backward()
             optimizer.step()
+            train_loss = loss.item()
 
         model.eval()
         with torch.no_grad():
@@ -251,6 +263,14 @@ def train_dual_branch(
             best_state = {key: value.detach().clone() for key, value in model.state_dict().items()}
         else:
             stale_epochs += 1
+        if log_interval > 0 and (
+            epoch == 0 or (epoch + 1) % log_interval == 0 or epoch + 1 == max_epochs
+        ):
+            print(
+                f"[{run_name}] epoch {epoch + 1}/{max_epochs} "
+                f"train_loss={train_loss:.4f} valid_loss={valid_loss:.4f} "
+                f"best_valid={best_valid:.4f} best_epoch={best_epoch}"
+            )
         if patience > 0 and stale_epochs >= patience:
             break
 
@@ -328,19 +348,24 @@ def aggregate_strategy(predictions: pd.DataFrame) -> dict[str, float]:
     }
 
 
-def config_candidates(search: bool) -> list[DualBranchConfig]:
+def _hidden_candidates(hidden_size: int) -> list[int]:
+    return sorted({max(16, hidden_size // 2), hidden_size, hidden_size * 2})
+
+
+def config_candidates(search: bool, lstm_layers: int, lstm_hidden: int, static_hidden: int) -> list[DualBranchConfig]:
     if not search:
-        return [DualBranchConfig()]
+        return [DualBranchConfig(lstm_hidden=lstm_hidden, lstm_layers=lstm_layers, static_hidden=static_hidden)]
     candidates = []
     for lstm_hidden, static_hidden, dropout, lr in itertools.product(
-        [32, 64],
-        [16, 32],
+        _hidden_candidates(lstm_hidden),
+        _hidden_candidates(static_hidden),
         [0.2, 0.3],
         [0.001, 0.0005],
     ):
         candidates.append(
             DualBranchConfig(
                 lstm_hidden=lstm_hidden,
+                lstm_layers=lstm_layers,
                 static_hidden=static_hidden,
                 dropout=dropout,
                 lr=lr,
@@ -365,9 +390,13 @@ def select_best_model(
     transaction_cost: float,
     min_valid_trades: int,
     search: bool,
+    lstm_layers: int,
+    lstm_hidden: int,
+    static_hidden: int,
+    log_interval: int,
 ) -> tuple[object, DualBranchConfig, float, int, float, float]:
     best = None
-    for i, config in enumerate(config_candidates(search)):
+    for i, config in enumerate(config_candidates(search, lstm_layers, lstm_hidden, static_hidden)):
         model, valid_loss, best_epoch = train_dual_branch(
             x_seq,
             x_static,
@@ -379,6 +408,8 @@ def select_best_model(
             batch_size=batch_size,
             seed=seed + i,
             patience=patience,
+            log_interval=log_interval,
+            run_name=f"dual-branch-{i + 1}",
         )
         valid_proba = predict_proba(model, x_seq[valid_idx], x_static[valid_idx])
         threshold, threshold_score = best_threshold(
@@ -396,6 +427,7 @@ def select_best_model(
         print(
             "[SEARCH]" if search else "[TRAIN]",
             f"lstm={config.lstm_hidden}",
+            f"layers={config.lstm_layers}",
             f"static={config.static_hidden}",
             f"dropout={config.dropout}",
             f"lr={config.lr}",
@@ -423,6 +455,10 @@ def run_dual_branch(
     min_hold_proba: float,
     min_valid_trades: int,
     search: bool,
+    lstm_layers: int,
+    lstm_hidden: int,
+    static_hidden: int,
+    log_interval: int,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     df = load_panel(data_path)
     df = df.dropna(subset=[TARGET_RETURN, TARGET_DIRECTION]).sort_values(["symbol", "date"]).reset_index(drop=True)
@@ -449,6 +485,10 @@ def run_dual_branch(
         transaction_cost=transaction_cost,
         min_valid_trades=min_valid_trades,
         search=search,
+        lstm_layers=lstm_layers,
+        lstm_hidden=lstm_hidden,
+        static_hidden=static_hidden,
+        log_interval=log_interval,
         meta=meta,
     )
     test_proba = predict_proba(model, x_seq[test_idx], x_static[test_idx])
@@ -471,6 +511,7 @@ def run_dual_branch(
     metric_values["min_hold_proba"] = min_hold_proba
     metric_values["min_valid_trades"] = float(min_valid_trades)
     metric_values["lstm_hidden"] = float(config.lstm_hidden)
+    metric_values["lstm_layers"] = float(config.lstm_layers)
     metric_values["static_hidden"] = float(config.static_hidden)
     metric_values["dropout"] = float(config.dropout)
     metric_values["learning_rate"] = float(config.lr)
@@ -556,14 +597,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--valid-start", default="2024-01-01")
     parser.add_argument("--test-start", default="2025-01-01")
     parser.add_argument("--window", type=int, default=20)
-    parser.add_argument("--epochs", type=int, default=30)
+    parser.add_argument("--epochs", type=int, default=60)
     parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--lstm-hidden", type=int, default=64)
+    parser.add_argument("--lstm-layers", type=int, default=2)
+    parser.add_argument("--static-hidden", type=int, default=64)
     parser.add_argument("--transaction-cost", type=float, default=0.001)
-    parser.add_argument("--patience", type=int, default=10)
+    parser.add_argument("--patience", type=int, default=15)
     parser.add_argument("--threshold-objective", choices=["f1", "strategy_return"], default="f1")
     parser.add_argument("--min-hold-proba", type=float, default=0.2)
     parser.add_argument("--min-valid-trades", type=int, default=20)
     parser.add_argument("--search", action="store_true", help="Run a small hyperparameter grid search.")
+    parser.add_argument("--log-interval", type=int, default=10, help="Print training loss every N epochs; 0 disables logs.")
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -586,6 +631,10 @@ def main() -> None:
         min_hold_proba=args.min_hold_proba,
         min_valid_trades=args.min_valid_trades,
         search=args.search,
+        lstm_layers=args.lstm_layers,
+        lstm_hidden=args.lstm_hidden,
+        static_hidden=args.static_hidden,
+        log_interval=args.log_interval,
     )
     predictions.to_csv(TABLE_DIR / "dual_branch_predictions.csv", index=False, encoding="utf-8-sig")
     metrics.to_csv(TABLE_DIR / "dual_branch_metrics.csv", index=False, encoding="utf-8-sig")

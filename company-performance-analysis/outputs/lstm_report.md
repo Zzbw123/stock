@@ -1,48 +1,50 @@
-# 基于 TOPSIS 经营绩效评价与 LSTM 的股价趋势预测研究
+# LSTM股价方向预测与交易策略报告
 
-## 1. 研究问题
-本文在长春高新经营绩效评价基础上，将年频财务指标、熵权 TOPSIS 综合得分与日频行情技术指标结合，比较基础 LSTM 与融合 LSTM 在未来短期趋势预测中的表现。
+## 1. 研究目标
+本报告从日频行情、市场环境、估值指标和经营绩效指标出发，预测未来 5 个交易日累计收益率方向，并把预测概率转化为可回测的 long-flat 交易信号。研究重点不是直接预测股价点位，而是判断短期上涨概率是否足够高、是否值得持仓。
 
-## 2. 为什么选择 LSTM
-股票收益序列具有明显的时间依赖，LSTM 能通过门控结构保留一段历史窗口中的有效信息，适合处理短期动量、均线、波动率等序列特征。
+## 2. 数据与标签
+每个样本使用过去 20 个交易日作为输入窗口。分类标签由 `future_5d_return > 0` 得到：未来累计收益为正记为上涨，否则记为非上涨。数据按时间顺序切分训练集、验证集和测试集，避免随机打乱造成未来信息泄露。
 
-## 3. 预测目标
-本研究优先预测未来 5 个交易日累计收益率方向，而不是直接预测绝对股价。方向标签由 future_5d_return 是否大于 0 得到，能降低股价尺度变化和复权误差带来的解释难度。
+数据来源包括 `data/processed/stock_market_features.csv`、`data/processed/financial_indicators.csv`、`outputs/tables/topsis_scores.csv` 和披露日表。财务与TOPSIS指标通过披露日向后生效，只允许模型使用当日已经公开的信息。
 
-## 4. 数据来源
-日频股价来自 data/processed/stock_prices.csv，补充后的市场特征来自 data/processed/stock_market_features.csv，包含前复权 OHLCV、成交额、换手率、沪深300、中证医药、创业板指、估值和市值字段；财务指标来自 data/processed/financial_indicators.csv；TOPSIS 得分来自 outputs/tables/topsis_scores.csv；财报披露日来自 data/processed/financial_disclosure_dates.csv。
+## 3. 模型设计
+普通 LSTM 使用行情、技术指标、市场指数收益、估值和市值等日频特征，重点捕捉价格序列自身的短期动量、均值回归和波动结构。
 
-## 5. 特征体系
-基础模型使用 open、high、low、close、volume、amount、turnover、收益率、均线、成交量均线、波动率、RSI、MACD、布林带、市场指数收益率、PE/PB/PS 和市值等行情、技术与市场环境变量；融合模型在此基础上加入 revenue、net_profit、roe、gross_margin、net_margin、asset_liability_ratio、current_ratio、revenue_growth、net_profit_growth、topsis_score、rank 等经营绩效变量。
+融合 LSTM 在普通特征之外加入营业收入、净利润、ROE、毛利率、净利率、资产负债率、流动比率、收入增长、净利润增长、TOPSIS得分和排名等经营绩效变量，用来检验基本面质量是否能提高方向判断。
 
-## 6. 财务绩效与 TOPSIS 融合方法
-脚本优先使用 financial_disclosure_dates.csv 中的披露日期，通过 merge_asof 将已经披露的最新财务指标和 TOPSIS 得分映射到每个交易日，从而避免在披露日前使用未来财务信息。部分早期年份若 AkShare 未返回实际披露日，则按年报 4 月 30 日、半年报 8 月 31 日、一季报 4 月 30 日、三季报 10 月 31 日进行估算，并在 disclosure_source 中标记。
+训练脚本默认采用 2 层 LSTM、隐藏层宽度 64；本轮单次结果表记录的普通模型实际参数为 2 层、隐藏层宽度 32。模型使用 dropout、BCEWithLogitsLoss 和早停机制。普通模型本轮在第 14 轮附近停止，说明验证集损失已经进入平台期，继续加轮数收益有限。
 
-## 7. 模型结构与数据切分
-每个样本使用过去 20 个交易日作为输入窗口。数据按时间顺序切分为约 70% 训练集、15% 验证集、15% 测试集，不进行随机打乱。特征标准化只在训练集拟合 scaler，验证集和测试集仅 transform。
+## 4. 策略层设计
+模型输出上涨概率后，不再简单使用 0.50 作为买入阈值，而是在验证集上选择双阈值：买入阈值约为 0.55，卖出/空仓阈值约为 0.30。当上涨概率高于买入阈值且市场过滤条件通过时持仓，否则空仓。
 
-模型采用单层 PyTorch LSTM、Dropout 和 Dense 输出层。分类任务使用 sigmoid 概率和 BCEWithLogitsLoss；回归任务使用线性输出和 MSELoss。脚本还提供小规模遗传算法搜索 hidden_size、dropout 和 learning_rate。
+阈值目标采用风险调整收益：验证集策略收益减去回撤惩罚和交易频率惩罚。回测按单边0.1%交易成本扣除，并加入中证医药20日收益过滤，只有行业环境不弱于设定阈值时才允许开仓。
 
-## 8. 实验结果
+## 5. 核心结果
 ```text
-metric          F1-score
-model                   
-base            0.039604
-fusion          0.000000
-naive_momentum  0.333333
+metric          Accuracy  Precision  Recall  F1-score  strategy_cum_return  buy_hold_cum_return  max_drawdown  trade_count  threshold  sell_threshold  hidden_size  num_layers  best_epoch  epochs_trained
+model                                                                                                                                                                                                     
+base              0.5914     0.4615  0.3636    0.4068               0.4037              -0.8828       -0.4573          8.0       0.55             0.3         32.0         2.0         4.0            14.0
+fusion            0.6148     0.0000  0.0000    0.0000               0.0000              -0.8828        0.0000          0.0       0.61             0.6         32.0         2.0         5.0            15.0
+naive_momentum    0.4864     0.3333  0.3333    0.3333              -0.7346              -0.8828       -0.7891         64.0        NaN             NaN          NaN         NaN         NaN             NaN
 ```
 
-## 9. 策略收益对比
-```text
-metric          buy_hold_cum_return  max_drawdown  strategy_cum_return
-model                                                                 
-base                      -0.882809      0.000000             0.019491
-fusion                    -0.882809     -0.050622            -0.050622
-naive_momentum            -0.882809     -0.780631            -0.716885
-```
+结果解释：
+- 普通 LSTM 的 F1-score 为 0.4068，策略累计收益为 40.37%，最大回撤为 -45.73%，交易次数为 8。
+- 融合 LSTM 的 F1-score 为 0.0000，策略累计收益为 0.00%，最大回撤为 0.00%，交易次数为 0。
+- 当前应优先采用普通 LSTM作为 5 日方向交易主模型。融合模型可以保留为解释性对照和中长期研究方向，但在本轮短周期策略中没有显示出稳定优势。
 
-## 10. 模型局限性
-第一，虽然已补充完整 OHLCV、指数和估值字段，但样本仍只覆盖单一股票，结论容易受个股阶段行情影响。第二，财务指标以年频为主，无法反映报告期内的实时经营变化。第三，部分早期披露日期为规则估算值，仍需用公告原文进一步校验。第四，模型结果不应直接解释为可交易投资建议。
+## 6. 图表解释
+- `outputs/figures/lstm_prediction.png`：展示测试集真实方向与预测概率/预测类别的时间序列关系，用来判断模型信号是否集中出现在趋势转换附近。
+- `outputs/figures/lstm_price_direction.png`：把预测信号叠加到收盘价走势上，便于观察买入信号是否避开了明显下跌段。
+- `outputs/figures/lstm_strategy_return.png`：比较模型策略、买入持有和朴素动量策略的累计收益，是判断模型是否有交易价值的主图。
+- `outputs/figures/lstm_metrics_comparison.png`：比较 Accuracy、F1-score、策略收益和回撤等指标，避免只看准确率造成误判。
+- `outputs/figures/lstm_confusion_matrix.png`：展示上涨/非上涨分类的混淆矩阵，用来识别模型是否偏向空仓或偏向看涨。
 
-## 11. 后续改进方向
-后续可进一步补充公告原文披露时间、分钟级流动性指标、行业成分股横截面样本和分析师预期数据；还可使用滚动窗口验证、交易成本和滑点假设、阈值优化与类别不均衡处理，提高结论稳健性。
+## 7. 模型选择建议
+短期交易策略优先看样本外策略收益、最大回撤、交易次数和滚动验证稳定性，而不是单次准确率。当前普通 LSTM 在策略收益和交易可执行性上更好，融合模型虽然理论上包含更多经营信息，但年频基本面变量对5日方向预测的边际贡献有限，且容易带来样本不足和信号钝化。
+
+因此，当前版本建议：普通 LSTM 作为主模型；融合 LSTM 暂不作为主交易模型，继续用于解释、稳健性对照和更长预测周期实验。
+
+## 8. 局限与下一步
+本实验仍是单股票、短样本、日频回测，结论会受个股阶段行情影响。下一步应重点做三件事：第一，用滚动验证持续检验每一年样本外表现；第二，扩展到同行业多股票，区分个股特异性和行业共性；第三，尝试更长预测周期或低频再平衡，让财务绩效和TOPSIS指标有更充分的发挥空间。

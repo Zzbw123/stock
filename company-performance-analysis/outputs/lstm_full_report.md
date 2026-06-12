@@ -1,143 +1,98 @@
-# 基于 TOPSIS 经营绩效融合的 LSTM 股价趋势预测完整报告
+# LSTM股价方向预测、模型融合与交易策略完整报告
 
 ## 摘要
 
-本报告在长春高新经营绩效评价基础上，构建未来 5 个交易日方向预测任务，并依次评估单股 LSTM、绩效融合 LSTM、滚动验证、SHAP 解释、同行面板双分支 LSTM 以及 walk-forward 截面 TopK 回测。核心结论是：低频经营绩效和 TOPSIS 得分可以作为解释性补充，但短期股价方向仍主要受估值、技术形态和市场环境驱动；双分支 LSTM 能改善分类 F1，但若没有市场状态过滤和仓位控制，绝对收益仍不稳定。
+本报告基于长春高新的日频行情、市场指数、估值指标、财务指标和TOPSIS经营绩效得分，构建未来5个交易日方向预测任务，并比较普通 LSTM、绩效融合 LSTM 和朴素动量基准。当前结论是：5日短周期交易优先采用普通 LSTM；融合模型可作为解释性对照和更长周期研究方向，但暂不适合作为主交易模型。
 
-## 1. 研究目标与预测任务
+策略层采用双阈值、风险调整收益目标、交易成本扣除和中证医药20日收益过滤。这样做的目的不是让模型每天都交易，而是在预测概率、行业环境和风险收益同时满足时才持仓。
 
-研究目标不是直接预测股价点位，而是预测未来 5 个交易日累计收益 `future_5d_return` 是否大于 0。该任务将股价尺度、复权处理和极端价格误差的影响降到较低水平，更适合与交易信号、组合回测和方向命中率指标连接。输入窗口设置为过去 20 个交易日。
+## 1. 研究目标
+
+研究目标不是直接预测股价点位，而是预测未来5个交易日累计收益 `future_5d_return` 是否大于0。方向预测比点位预测更适合和交易信号、组合回测、方向命中率、F1-score 与累计收益连接，也能降低复权尺度和极端价格误差的影响。
+
+本轮输入窗口为过去20个交易日。模型每次读取一段连续历史特征，输出未来5日上涨概率。
 
 ## 2. 数据与特征体系
 
-数据包括前复权 OHLCV、成交额、换手率、均线、收益率、波动率、RSI、MACD、布林带、沪深300/中证医药/创业板指数特征、估值与市值字段。经营绩效侧包含收入、净利润、ROE、毛利率、净利率、资产负债率、流动比率、收入增速、净利润增速、TOPSIS 得分和排名。财务数据按披露日 `merge_asof` 映射到交易日，避免在公告披露前使用未来财务信息。
+日频特征包括前复权 OHLCV、成交额、换手率、收益率、均线、成交量均线、波动率、RSI、MACD、布林带、沪深300/中证医药/创业板指数收益、PE/PB/PS、市值等。
 
-## 3. 模型设计
+经营绩效特征包括营业收入、净利润、ROE、毛利率、净利率、资产负债率、流动比率、收入增长、净利润增长、TOPSIS得分和排名。
 
-基础 LSTM 使用日频行情、技术指标、指数和估值变量作为时间序列输入；融合 LSTM 在此基础上纳入已经披露的经营绩效与 TOPSIS 信息。双分支 LSTM 将快变量和慢变量分开处理：日频行情/技术/指数/估值进入 LSTM 分支，财务/TOPSIS/公司与行业哑变量进入 MLP 静态分支，二者拼接后输出未来 5 日上涨概率。该结构避免把年频财务指标简单复制成日频序列后完全交给 LSTM 学习。
+财务和TOPSIS指标按披露日映射到交易日，只允许模型使用当时已经公开的信息，避免把未来财报提前泄露到历史样本中。
 
-## 4. 单股 LSTM 结果
+## 3. 模型路线
 
-单次时间切分结果如下：
+普通 LSTM 只使用行情、技术、市场、估值和市值等日频变量，重点学习短期价格序列结构。
 
-```text
-metric          Accuracy  F1-score  buy_hold_cum_return  max_drawdown  strategy_cum_return
-model                                                                                     
-base              0.6226    0.0396              -0.8828        0.0000               0.0195
-fusion            0.6109    0.0000              -0.8828       -0.0506              -0.0506
-naive_momentum    0.4864    0.3333              -0.8828       -0.7806              -0.7169
-```
+融合 LSTM 在普通 LSTM 的基础上加入财务指标和TOPSIS得分，用来检验经营绩效是否能改善短期方向预测。
 
-该结果显示，单次切分中基础 LSTM 和融合 LSTM 的分类 F1 并不理想，融合信息没有稳定转化为更强的短期方向预测能力。这一阶段的意义在于建立可运行的序列预测管线，而不是证明单股模型已具备稳定交易价值。
+当前训练脚本默认采用2层 LSTM、隐藏层宽度64、dropout、BCEWithLogitsLoss 和早停机制。单次结果表记录的普通模型实际参数为2层、隐藏层宽度32；滚动验证使用隐藏层宽度64。早停结果显示，继续机械增加训练轮数或层数不一定带来提升，后续更应关注验证方式和策略风控。
 
-![LSTM 模型演进](figures/lstm_fig1_model_progress.png)
+## 4. 策略规则
 
-## 5. 滚动验证与最新信号
+模型输出上涨概率后，策略不再使用固定0.50阈值，而是在验证集上选择双阈值：买入阈值和卖出/空仓阈值分开设置。
 
-滚动验证均值如下：
+本轮主要规则如下：
 
-```text
-metric          Accuracy  F1-score  strategy_cum_return
-model                                                  
-base              0.3970    0.5571              -0.6144
-fusion            0.3998    0.5630              -0.5116
-naive_momentum    0.4731    0.3160              -0.2620
-```
+- 买入阈值：普通 LSTM 约为0.55。
+- 卖出/空仓阈值：普通 LSTM 约为0.30。
+- 阈值目标：风险调整收益，即策略收益减去回撤惩罚和交易频率惩罚。
+- 市场过滤：中证医药20日收益不弱于设定阈值时才允许开仓。
+- 交易成本：单边0.1%，仅在仓位变化时扣除。
+- 仓位规则：long-flat，只做持仓或空仓，不做卖空。
 
-最新滚动信号日期为 `2026-06-11`，模型为 `fusion`，收盘价 `64.32`，上涨概率 `0.4733`，阈值 `0.50`，信号为 `stay_flat`。滚动验证比单次切分更接近真实部署，因为每个测试年份只能使用之前的数据。
-
-![滚动验证稳定性](figures/lstm_fig2_rolling_stability.png)
-
-## 6. SHAP 可解释性
-
-SHAP 代理模型指标如下：
+## 5. 单次样本外测试结果
 
 ```text
-            model           metric  value
-shap_proxy_fusion         Accuracy 0.5808
-shap_proxy_fusion        Precision 0.4660
-shap_proxy_fusion           Recall 0.4706
-shap_proxy_fusion         F1-score 0.4683
-shap_proxy_fusion DirectionHitRate 0.5808
+metric          Accuracy  Precision  Recall  F1-score  strategy_cum_return  buy_hold_cum_return  max_drawdown  trade_count  threshold  sell_threshold
+model
+base              0.5914     0.4615  0.3636    0.4068               0.4037              -0.8828       -0.4573          8.0       0.55            0.30
+fusion            0.6148     0.0000  0.0000    0.0000               0.0000              -0.8828        0.0000          0.0       0.61            0.60
+naive_momentum    0.4864     0.3333  0.3333    0.3333              -0.7346              -0.8828       -0.7891         64.0        NaN             NaN
 ```
 
-Top SHAP 特征如下：
+普通 LSTM 在单次测试中取得40.37%的策略累计收益，优于买入持有和朴素动量。融合 LSTM 虽然 Accuracy 较高，但 F1-score 为0、交易次数为0，说明它主要表现为保守空仓，不能作为当前短周期主交易模型。
+
+## 6. 滚动验证结果
+
+滚动验证采用 expanding-window：每个测试年份之前的历史样本用于训练和验证，测试年份完整留作样本外检验。
 
 ```text
-           feature  mean_abs_shap
-               peg         0.5277
-        boll_width         0.3095
-               ma5         0.2248
-     volatility_5d         0.2213
-         pe_static         0.1892
-  hs300_return_20d         0.1867
-         return_5d         0.1753
-chinext_return_20d         0.1589
-    volatility_20d         0.1236
-        boll_lower         0.1206
+metric          Accuracy  Precision  Recall  F1-score  strategy_cum_return  buy_hold_cum_return  max_drawdown  trade_count
+model
+base              0.5960     0.3145  0.3092    0.3103               0.8208              -0.5085       -0.3461      10.0000
+fusion            0.5864     0.3037  0.1308    0.1624              -0.2071              -0.5085       -0.3459       4.6667
+naive_momentum    0.4731     0.3196  0.3125    0.3160              -0.2620              -0.5085       -0.6146      42.0000
 ```
 
-解释结果表明，`peg`、布林带宽度、短期均线、波动率、指数收益等特征贡献靠前。经营绩效/TOPSIS 信息更适合作为慢变量和状态变量，不宜被解释为短期股价方向的唯一主因。
+滚动结果支持普通 LSTM 作为主模型。融合模型加入了更多经营绩效信息，但在5日短周期上没有形成稳定收益优势，且交易次数偏少，容易出现“看起来准确、实际不开仓”的情况。
 
-![SHAP 特征贡献](figures/lstm_fig3_shap_explainability.png)
+## 7. 最新信号
 
-## 7. 双分支 LSTM 面板扩展
+最新滚动信号见 `outputs/tables/rolling_latest_signal.csv`。当前记录为2026-06-11，融合模型上涨概率约0.4021，阈值0.55，信号为 `stay_flat`。从策略解释角度看，这表示模型没有达到高置信度开仓条件，不等同于强烈看空。
 
-双分支 LSTM 的关键指标如下：
+主信号解释建议优先查看 `outputs/figures/rolling_prediction_signals_base.png`，融合模型信号图作为对照。
 
-```text
-             metric   value
-           Accuracy  0.4949
-          Precision  0.4808
-             Recall  0.9449
-           F1-score  0.6373
-strategy_cum_return -0.1126
-buy_hold_cum_return -0.3740
-       max_drawdown -0.8364
-         best_epoch  5.0000
-          threshold  0.2800
-```
+## 8. 图表解释
 
-双分支模型在测试集上取得较高召回率和 `F1-score = 0.6373`，策略累计收益为 `-0.1126`，同期买入持有收益为 `-0.3740`。这说明模型相对单股 LSTM 有明显分类改善，但仍存在精度不足、阈值敏感和回撤偏大的问题。
+核心图表说明已经整理到 `outputs/lstm_figure_usage_report.md`。汇报时推荐按以下顺序使用：
 
-![双分支 LSTM 个股异质性](figures/lstm_fig4_dual_branch_panel.png)
+1. `outputs/figures/lstm_strategy_return.png`：先说明模型最终要看扣除成本后的策略收益。
+2. `outputs/figures/lstm_metrics_comparison.png`：再说明为什么不能只看 Accuracy。
+3. `outputs/figures/lstm_confusion_matrix.png`：解释融合模型为什么可能“准确率不低但不开仓”。
+4. `outputs/figures/lstm_rolling_strategy_return.png`：说明滚动验证比单次切分更接近真实部署。
+5. `outputs/figures/rolling_prediction_signals_base.png`：展示最终普通 LSTM 的信号行为。
 
-## 8. Walk-forward 截面 TopK 检验
+## 9. 模型选择结论
 
-为避免固定测试集带来的过拟合错觉，进一步进行了逐年 walk-forward 检验：测试年前一年作为验证集选择阈值，验证年前所有历史数据作为训练集，然后在测试年按预测概率进行非重叠 5 日 TopK 调仓。当前最优组合为 `lightgbm_financial` / Top5，总收益 `-0.3705`，等权基准 `-0.5455`，超额收益 `0.1751`。
+当前不建议继续盲目增加 LSTM 层数。层数和隐藏层扩大后，真正的瓶颈已经从模型容量转向样本量、阈值稳定性、市场状态过滤和交易约束。
 
-最优组合年度拆解如下：
+当前模型选择如下：
 
-```text
-      source            variant  top_k  min_probability  year  periods  total_return  benchmark_total_return  excess_total_return  max_drawdown  win_rate  avg_turnover  avg_selected_count
-walk_forward lightgbm_financial      5              0.0  2022       49       -0.1007                 -0.2010               0.1003       -0.2979    0.4898        0.4531                 5.0
-walk_forward lightgbm_financial      5              0.0  2023       48       -0.0661                 -0.1947               0.1286       -0.2106    0.5208        0.5333                 5.0
-walk_forward lightgbm_financial      5              0.0  2024       49       -0.2358                 -0.2323              -0.0035       -0.3289    0.3469        0.2449                 5.0
-walk_forward lightgbm_financial      5              0.0  2025       48        0.1905                  0.1471               0.0434       -0.1526    0.5208        0.5417                 5.0
-walk_forward lightgbm_financial      5              0.0  2026       20       -0.1761                 -0.1979               0.0219       -0.2060    0.5000        0.4800                 5.0
-```
+- 主交易模型：普通 LSTM。
+- 研究对照模型：融合 LSTM。
+- 后续重点：跨股票扩展、10日/20日预测周期、分市场状态阈值、滑点/涨跌停/停牌约束和更严格 walk-forward 回测。
 
-结果表明模型在 2022、2023、2025、2026 年具有相对抗跌或增强能力，但 2024 年失效，说明后续必须引入市场状态过滤、动态仓位和不交易区间。
+## 10. 局限性
 
-![Walk-forward 截面 TopK](figures/lstm_fig5_walk_forward_strategy.png)
-
-## 9. 局限性
-
-第一，样本仍集中在医药及相关同行，行业系统性下行会压制绝对收益。第二，财务和 TOPSIS 特征为低频变量，对 5 日短周期预测的边际贡献有限。第三，当前交易回测仅考虑单边交易成本，尚未加入滑点、涨跌停无法成交、停牌、成交量约束和组合容量。第四，双分支 LSTM 召回率高但精度偏低，容易在弱势环境中维持过多仓位。第五，SHAP 使用 LightGBM 代理解释，不等同于直接解释 PyTorch LSTM 内部状态。
-
-## 10. 后续优化方向
-
-后续优先级应从继续堆模型转向风控和验证口径：一是加入沪深300/中证医药趋势过滤，在行业弱势时降低仓位；二是基于预测概率分布设置不交易区间，概率不够分散时空仓；三是使用 walk-forward 方式重训双分支 LSTM，而不是只做固定切分；四是引入概率校准和分组阈值，缓解高召回、低精度结构；五是进一步扩展同行样本和宏观/资金流/分析师预期数据。
-
-## 11. 图表追溯
-
-本报告新增 5 张图，均已导出 SVG、PNG、PDF 和 trace 文件，并写入 `outputs/tables/figure_contracts.csv` 与 `outputs/tables/figure_source_map.csv`。
-
-```text
-                      figure_id                                                     core_conclusion                                                                                                                                source_data_paths                                              output_targets
-       lstm_fig1_model_progress            双分支 LSTM 的 F1-score 明显高于单股 LSTM，但策略收益仍为负，说明模型提升不能替代交易风控。                                 outputs/tables/lstm_metrics.csv; outputs/tables/lstm_rolling_metrics.csv; outputs/tables/dual_branch_metrics.csv        outputs/figures/lstm_fig1_model_progress.svg/png/pdf
-    lstm_fig2_rolling_stability                     融合 LSTM 的平均 F1 略高，但不同年份策略收益波动较大，模型需要滚动验证而非单次切分。                                                                                                          outputs/tables/lstm_rolling_metrics.csv     outputs/figures/lstm_fig2_rolling_stability.svg/png/pdf
-  lstm_fig3_shap_explainability                      PEG、布林带宽度、均线、波动率和指数收益等特征贡献靠前，短期方向更依赖估值与市场技术状态。                                                                        outputs/tables/shap_importance.csv; outputs/tables/shap_proxy_metrics.csv   outputs/figures/lstm_fig3_shap_explainability.svg/png/pdf
-    lstm_fig4_dual_branch_panel                        药明康德、恒瑞医药等样本 F1 较高，但整体呈现高召回、低精度结构，阈值和风控仍是关键。                                                                                                    outputs/tables/dual_branch_symbol_metrics.csv     outputs/figures/lstm_fig4_dual_branch_panel.svg/png/pdf
-lstm_fig5_walk_forward_strategy 最优 walk-forward Top5 组合跑赢等权基准 17.5 个百分点，但总收益仍为负，说明模型具有相对收益而非绝对收益保证。 outputs/tables/walk_forward_topk_metrics.csv; outputs/tables/walk_forward_topk_yearly_metrics.csv; outputs/tables/walk_forward_topk_backtest.csv outputs/figures/lstm_fig5_walk_forward_strategy.svg/png/pdf
-```
+本结果来自单只股票和较短历史样本，不能直接解释为可投入实盘的投资建议。策略仍需纳入滑点、成交量容量、涨跌停无法成交、停牌、资金管理和多股票分散检验。融合模型在理论上有价值，但其低频基本面信息更可能适合中期预测，而不是5日方向交易。

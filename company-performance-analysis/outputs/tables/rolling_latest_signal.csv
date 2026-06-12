@@ -1,2 +1,2 @@
-﻿date,model,window,horizon,close,predicted_direction,predicted_probability,threshold,signal,note
-2026-06-11,fusion,20,5,64.32,0,0.4732692241668701,0.5,stay_flat,Predicted from latest available feature row; future return is not yet known.
+﻿date,model,window,horizon,close,predicted_direction,predicted_probability,threshold,sell_threshold,valid_risk_adjusted_return_at_threshold,valid_trade_count,signal,note
+2026-06-11,fusion,20,5,64.32,0,0.402076780796051,0.55,0.3,1.0093542025370148,6.0,stay_flat,Predicted from latest available feature row; future return is not yet known.

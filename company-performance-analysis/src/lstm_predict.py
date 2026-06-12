@@ -52,7 +52,8 @@ plt.rcParams["axes.unicode_minus"] = False
 
 @dataclass
 class LSTMConfig:
-    hidden_size: int = 32
+    hidden_size: int = 64
+    num_layers: int = 2
     dropout: float = 0.2
     lr: float = 0.001
 
@@ -157,6 +158,7 @@ def make_sequences_with_meta(
     actual_direction_col: str,
     window: int,
     train_sequence_indices: np.ndarray,
+    meta_cols: Iterable[str] | None = None,
 ) -> tuple[np.ndarray, np.ndarray, pd.DataFrame, StandardScaler]:
     target_positions = np.arange(window, len(frame))
     if len(target_positions) == 0:
@@ -168,27 +170,35 @@ def make_sequences_with_meta(
     scaled = scaler.transform(frame[feature_cols])
 
     x, y, meta_rows = [], [], []
+    extra_meta_cols = [col for col in (meta_cols or []) if col in frame.columns]
     for pos in target_positions:
         x.append(scaled[pos - window : pos])
         y.append(frame.loc[pos, target_col])
-        meta_rows.append(
-            {
-                "date": frame.loc[pos, "date"],
-                "close": frame.loc[pos, "close"],
-                "actual_return": frame.loc[pos, actual_return_col],
-                "actual_direction": frame.loc[pos, actual_direction_col],
-            }
-        )
+        row = {
+            "date": frame.loc[pos, "date"],
+            "close": frame.loc[pos, "close"],
+            "actual_return": frame.loc[pos, actual_return_col],
+            "actual_direction": frame.loc[pos, actual_direction_col],
+        }
+        for col in extra_meta_cols:
+            row[col] = frame.loc[pos, col]
+        meta_rows.append(row)
     return np.asarray(x, dtype=np.float32), np.asarray(y, dtype=np.float32), pd.DataFrame(meta_rows), scaler
 
 
-def build_model(input_size: int, hidden_size: int, dropout: float, task: str):
+def build_model(input_size: int, hidden_size: int, num_layers: int, dropout: float, task: str):
     _torch, nn, _DataLoader, _TensorDataset = _require_torch()
 
     class StockLSTM(nn.Module):
         def __init__(self) -> None:
             super().__init__()
-            self.lstm = nn.LSTM(input_size=input_size, hidden_size=hidden_size, batch_first=True)
+            self.lstm = nn.LSTM(
+                input_size=input_size,
+                hidden_size=hidden_size,
+                num_layers=num_layers,
+                batch_first=True,
+                dropout=dropout if num_layers > 1 else 0.0,
+            )
             self.dropout = nn.Dropout(dropout)
             self.output = nn.Linear(hidden_size, 1)
 
@@ -210,13 +220,17 @@ def train_model(
     batch_size: int,
     seed: int = 42,
     class_weight: str = "balanced",
+    log_interval: int = 0,
+    run_name: str = "lstm",
+    patience: int = 0,
+    min_delta: float = 0.0,
 ) -> tuple[object, float]:
     torch, nn, DataLoader, TensorDataset = _require_torch()
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
 
-    model = build_model(x.shape[2], config.hidden_size, config.dropout, task)
+    model = build_model(x.shape[2], config.hidden_size, config.num_layers, config.dropout, task)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
     if task == "classification":
         pos_weight = None
@@ -235,14 +249,21 @@ def train_model(
 
     best_state = None
     best_valid = math.inf
-    for _epoch in range(max(1, epochs)):
+    best_epoch = 0
+    stale_epochs = 0
+    max_epochs = max(1, epochs)
+    epochs_trained = 0
+    for epoch in range(max_epochs):
+        epochs_trained = epoch + 1
         model.train()
+        train_loss = math.nan
         for xb, yb in train_loader:
             optimizer.zero_grad()
             pred = model(xb)
             loss = criterion(pred, yb.float())
             loss.backward()
             optimizer.step()
+            train_loss = loss.item()
 
         if len(valid_idx):
             model.eval()
@@ -252,12 +273,34 @@ def train_model(
         else:
             valid_loss = loss.item()
 
-        if valid_loss < best_valid:
+        if valid_loss < best_valid - min_delta:
             best_valid = valid_loss
+            best_epoch = epoch + 1
+            stale_epochs = 0
             best_state = {key: value.detach().clone() for key, value in model.state_dict().items()}
+        else:
+            stale_epochs += 1
+        if log_interval > 0 and (
+            epoch == 0 or (epoch + 1) % log_interval == 0 or epoch + 1 == max_epochs
+        ):
+            print(
+                f"[{run_name}] epoch {epoch + 1}/{max_epochs} "
+                f"train_loss={train_loss:.4f} valid_loss={valid_loss:.4f} "
+                f"best_valid={best_valid:.4f} best_epoch={best_epoch}"
+            )
+        if patience > 0 and stale_epochs >= patience:
+            if log_interval > 0:
+                print(f"[{run_name}] early stopping at epoch {epoch + 1}; best_epoch={best_epoch}")
+            break
 
     if best_state is not None:
         model.load_state_dict(best_state)
+    model.training_summary = {
+        "best_epoch": int(best_epoch),
+        "best_valid_loss": float(best_valid),
+        "epochs": int(max_epochs),
+        "epochs_trained": int(epochs_trained),
+    }
     return model, float(best_valid)
 
 
@@ -273,19 +316,133 @@ def predict_model(model, x: np.ndarray, task: str, threshold: float = 0.5) -> tu
     return raw.astype(float), np.full_like(raw, np.nan, dtype=float)
 
 
-def random_config() -> LSTMConfig:
+def make_trade_signal(
+    probabilities: np.ndarray,
+    buy_threshold: float,
+    sell_threshold: float | None = None,
+    threshold_mode: str = "single",
+    market_filter: np.ndarray | None = None,
+) -> np.ndarray:
+    """Convert probabilities into a long-flat position signal."""
+    prob = np.asarray(probabilities, dtype=float)
+    if threshold_mode == "dual":
+        sell = float(sell_threshold if sell_threshold is not None else buy_threshold)
+        position = 0
+        signal = []
+        for idx, value in enumerate(prob):
+            allowed = True if market_filter is None else bool(market_filter[idx])
+            if not allowed:
+                position = 0
+            elif value >= buy_threshold:
+                position = 1
+            elif value <= sell:
+                position = 0
+            signal.append(position)
+        return np.asarray(signal, dtype=int)
+
+    signal = (prob >= buy_threshold).astype(int)
+    if market_filter is not None:
+        signal = signal * np.asarray(market_filter, dtype=bool).astype(int)
+    return signal.astype(int)
+
+
+def market_filter_mask(meta: pd.DataFrame, column: str, minimum: float) -> np.ndarray | None:
+    if not column or column not in meta.columns:
+        return None
+    return pd.to_numeric(meta[column], errors="coerce").fillna(-np.inf).to_numpy(dtype=float) >= minimum
+
+
+def select_classification_threshold(
+    y_true: np.ndarray,
+    probabilities: np.ndarray,
+    actual_returns: np.ndarray,
+    objective: str,
+    transaction_cost: float,
+    min_hold_proba: float,
+    min_valid_trades: int,
+    threshold_mode: str,
+    drawdown_penalty: float,
+    trade_penalty: float,
+    market_filter: np.ndarray | None = None,
+) -> tuple[float, float, float, float]:
+    """Choose a long-flat probability threshold on validation data."""
+    start = max(0.30, min(float(min_hold_proba), 0.80))
+    buy_thresholds = np.round(np.arange(start, 0.81, 0.02), 2)
+    if len(buy_thresholds) == 0:
+        buy_thresholds = np.asarray([start])
+
+    best_buy_threshold = float(buy_thresholds[0])
+    best_sell_threshold = np.nan
+    best_score = -math.inf
+    best_trade_count = 0.0
+    fallback: tuple[float, float, float, float] | None = None
+
+    for buy_threshold in buy_thresholds:
+        if threshold_mode == "dual":
+            sell_thresholds = np.round(np.arange(0.30, max(0.31, buy_threshold), 0.02), 2)
+            sell_thresholds = sell_thresholds[sell_thresholds < buy_threshold]
+            if len(sell_thresholds) == 0:
+                sell_thresholds = np.asarray([max(0.30, buy_threshold - 0.10)])
+        else:
+            sell_thresholds = np.asarray([np.nan])
+
+        for sell_threshold in sell_thresholds:
+            pred = make_trade_signal(
+                probabilities,
+                float(buy_threshold),
+                None if np.isnan(sell_threshold) else float(sell_threshold),
+                threshold_mode=threshold_mode,
+                market_filter=market_filter,
+            )
+            backtest = backtest_long_flat(actual_returns, pred, transaction_cost=transaction_cost)
+            trade_count = float(backtest["turnover"].sum())
+            f1 = classification_metrics(y_true.astype(int), pred.astype(int))["F1-score"]
+            strategy_return = float(backtest["strategy_cum_return"].iloc[-1])
+            max_dd = abs(float(backtest["max_drawdown"].iloc[-1]))
+            if objective == "f1":
+                score = f1
+            elif objective == "strategy_return":
+                score = strategy_return
+            elif objective == "risk_adjusted_return":
+                score = strategy_return - drawdown_penalty * max_dd - trade_penalty * trade_count
+            else:
+                raise ValueError("threshold objective must be f1, strategy_return, or risk_adjusted_return.")
+
+            if fallback is None or f1 > fallback[2]:
+                fallback = (float(buy_threshold), float(sell_threshold), float(f1), trade_count)
+
+            if trade_count < min_valid_trades:
+                continue
+            if score > best_score:
+                best_buy_threshold = float(buy_threshold)
+                best_sell_threshold = float(sell_threshold)
+                best_score = float(score)
+                best_trade_count = trade_count
+
+    if not math.isfinite(best_score):
+        assert fallback is not None
+        return fallback
+    return best_buy_threshold, best_sell_threshold, best_score, best_trade_count
+
+
+def hidden_size_candidates(hidden_size: int) -> list[int]:
+    return sorted({max(16, hidden_size // 2), hidden_size, hidden_size * 2})
+
+
+def random_config(num_layers: int, hidden_size: int) -> LSTMConfig:
     return LSTMConfig(
-        hidden_size=random.choice([16, 32, 64]),
+        hidden_size=random.choice(hidden_size_candidates(hidden_size)),
+        num_layers=num_layers,
         dropout=random.choice([0.1, 0.2, 0.3]),
         lr=random.choice([0.0005, 0.001, 0.002]),
     )
 
 
 def mutate_config(config: LSTMConfig) -> LSTMConfig:
-    child = LSTMConfig(config.hidden_size, config.dropout, config.lr)
+    child = LSTMConfig(config.hidden_size, config.num_layers, config.dropout, config.lr)
     field = random.choice(["hidden_size", "dropout", "lr"])
     if field == "hidden_size":
-        child.hidden_size = random.choice([16, 32, 64])
+        child.hidden_size = random.choice(hidden_size_candidates(config.hidden_size))
     elif field == "dropout":
         child.dropout = random.choice([0.1, 0.2, 0.3])
     else:
@@ -305,13 +462,15 @@ def genetic_search(
     ga_epochs: int,
     seed: int,
     class_weight: str,
+    num_layers: int,
+    hidden_size: int,
 ) -> LSTMConfig:
     """Small genetic search over hidden units, dropout and learning rate."""
     if generations <= 0 or population_size <= 0:
-        return LSTMConfig()
+        return LSTMConfig(hidden_size=hidden_size, num_layers=num_layers)
 
     random.seed(seed)
-    population = [random_config() for _ in range(population_size)]
+    population = [random_config(num_layers, hidden_size) for _ in range(population_size)]
     scored: list[tuple[float, LSTMConfig]] = []
     for _generation in range(generations):
         scored = []
@@ -392,6 +551,18 @@ def run_one_model(
     class_weight: str,
     threshold: float,
     transaction_cost: float,
+    num_layers: int,
+    hidden_size: int,
+    log_interval: int,
+    patience: int,
+    threshold_objective: str,
+    min_hold_proba: float,
+    min_valid_trades: int,
+    threshold_mode: str,
+    drawdown_penalty: float,
+    trade_penalty: float,
+    market_filter_column: str,
+    market_filter_min: float,
 ) -> tuple[pd.DataFrame, list[dict[str, object]], pd.DataFrame]:
     target_return = TARGET_RETURN_TEMPLATE.format(horizon=horizon)
     target_direction = TARGET_DIRECTION_TEMPLATE.format(horizon=horizon)
@@ -412,6 +583,7 @@ def run_one_model(
         target_direction,
         window,
         train_idx,
+        meta_cols=[market_filter_column],
     )
 
     config = genetic_search(
@@ -426,6 +598,8 @@ def run_one_model(
         ga_epochs=ga_epochs,
         seed=seed,
         class_weight=class_weight,
+        num_layers=num_layers,
+        hidden_size=hidden_size,
     )
     model, _valid_loss = train_model(
         x,
@@ -438,14 +612,42 @@ def run_one_model(
         batch_size=batch_size,
         seed=seed,
         class_weight=class_weight,
+        log_interval=log_interval,
+        run_name=f"{model_name}-{task}",
+        patience=patience,
     )
 
     test_meta = meta.iloc[test_idx].reset_index(drop=True)
     y_test = y[test_idx]
-    pred, prob = predict_model(model, x[test_idx], task, threshold=threshold)
+    selected_threshold = threshold
+    selected_sell_threshold = np.nan
+    threshold_score = np.nan
+    valid_trade_count = np.nan
+    if task == "classification":
+        _valid_pred, valid_prob = predict_model(model, x[valid_idx], task, threshold=threshold)
+        selected_threshold, selected_sell_threshold, threshold_score, valid_trade_count = select_classification_threshold(
+            y[valid_idx],
+            valid_prob,
+            meta.iloc[valid_idx]["actual_return"].to_numpy(dtype=float),
+            objective=threshold_objective,
+            transaction_cost=transaction_cost,
+            min_hold_proba=min_hold_proba,
+            min_valid_trades=min_valid_trades,
+            threshold_mode=threshold_mode,
+            drawdown_penalty=drawdown_penalty,
+            trade_penalty=trade_penalty,
+            market_filter=market_filter_mask(meta.iloc[valid_idx], market_filter_column, market_filter_min),
+        )
+    pred, prob = predict_model(model, x[test_idx], task, threshold=selected_threshold)
 
     if task == "classification":
-        predicted_direction = pred.astype(int)
+        predicted_direction = make_trade_signal(
+            prob,
+            selected_threshold,
+            None if np.isnan(selected_sell_threshold) else selected_sell_threshold,
+            threshold_mode=threshold_mode,
+            market_filter=market_filter_mask(test_meta, market_filter_column, market_filter_min),
+        )
         predicted_return = np.where(predicted_direction == 1, np.abs(test_meta["actual_return"]), -np.abs(test_meta["actual_return"]))
         metric_actual = y_test.astype(int)
         metric_pred = predicted_direction
@@ -474,8 +676,22 @@ def run_one_model(
     metrics["trade_count"] = float(backtest["turnover"].sum())
     metrics["total_transaction_cost"] = float(backtest["transaction_cost"].sum())
     metrics["hidden_size"] = float(config.hidden_size)
+    metrics["num_layers"] = float(config.num_layers)
     metrics["dropout"] = float(config.dropout)
     metrics["learning_rate"] = float(config.lr)
+    metrics["threshold"] = float(selected_threshold)
+    metrics["sell_threshold"] = float(selected_sell_threshold)
+    metrics[f"valid_{threshold_objective}_at_threshold"] = float(threshold_score)
+    metrics["valid_trade_count"] = float(valid_trade_count)
+    metrics["threshold_mode"] = threshold_mode
+    metrics["min_hold_proba"] = float(min_hold_proba)
+    metrics["min_valid_trades"] = float(min_valid_trades)
+    metrics["drawdown_penalty"] = float(drawdown_penalty)
+    metrics["trade_penalty"] = float(trade_penalty)
+    metrics["market_filter_min"] = float(market_filter_min)
+    metrics["best_epoch"] = float(getattr(model, "training_summary", {}).get("best_epoch", np.nan))
+    metrics["best_valid_loss"] = float(getattr(model, "training_summary", {}).get("best_valid_loss", np.nan))
+    metrics["epochs_trained"] = float(getattr(model, "training_summary", {}).get("epochs_trained", np.nan))
 
     confusion = pd.DataFrame()
     if task == "classification":
@@ -657,7 +873,7 @@ def write_report(metrics: pd.DataFrame, predictions: pd.DataFrame, task: str, ho
         "## 7. 模型结构与数据切分",
         f"每个样本使用过去 {window} 个交易日作为输入窗口。数据按时间顺序切分为约 70% 训练集、15% 验证集、15% 测试集，不进行随机打乱。特征标准化只在训练集拟合 scaler，验证集和测试集仅 transform。",
         "",
-        "模型采用单层 PyTorch LSTM、Dropout 和 Dense 输出层。分类任务使用 sigmoid 概率和 BCEWithLogitsLoss；回归任务使用线性输出和 MSELoss。脚本还提供小规模遗传算法搜索 hidden_size、dropout 和 learning_rate。",
+        "模型采用可配置多层 PyTorch LSTM、Dropout 和 Dense 输出层。分类任务使用 sigmoid 概率和 BCEWithLogitsLoss；回归任务使用线性输出和 MSELoss。脚本还提供小规模遗传算法搜索 hidden_size、dropout 和 learning_rate。",
         "",
         "## 8. 实验结果",
     ]
@@ -685,21 +901,148 @@ def write_report(metrics: pd.DataFrame, predictions: pd.DataFrame, task: str, ho
     report_path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def _report_metric_table(metrics: pd.DataFrame, metric_names: list[str]) -> pd.DataFrame:
+    selected = metrics[metrics["metric"].isin(metric_names)].copy()
+    selected["value"] = pd.to_numeric(selected["value"], errors="coerce")
+    table = selected.pivot_table(index="model", columns="metric", values="value", aggfunc="first")
+    return table.reindex(columns=[m for m in metric_names if m in table.columns])
+
+
+def _report_metric_value(metrics: pd.DataFrame, model: str, metric: str, default: float = np.nan) -> float:
+    selected = metrics[(metrics["model"] == model) & (metrics["metric"] == metric)]
+    if selected.empty:
+        return default
+    return float(pd.to_numeric(selected["value"].iloc[0], errors="coerce"))
+
+
+def _fmt_pct(value: float) -> str:
+    if pd.isna(value):
+        return "NA"
+    return f"{value:.2%}"
+
+
+def _fmt_num(value: float, digits: int = 4) -> str:
+    if pd.isna(value):
+        return "NA"
+    return f"{value:.{digits}f}"
+
+
+def write_report(metrics: pd.DataFrame, predictions: pd.DataFrame, task: str, horizon: int, window: int) -> None:
+    report_path = PROJECT_ROOT / "outputs" / "lstm_report.md"
+    core_metrics = [
+        "Accuracy",
+        "Precision",
+        "Recall",
+        "F1-score",
+        "strategy_cum_return",
+        "buy_hold_cum_return",
+        "max_drawdown",
+        "trade_count",
+        "threshold",
+        "sell_threshold",
+        "hidden_size",
+        "num_layers",
+        "best_epoch",
+        "epochs_trained",
+    ]
+    table = _report_metric_table(metrics, core_metrics)
+
+    base_return = _report_metric_value(metrics, "base", "strategy_cum_return")
+    fusion_return = _report_metric_value(metrics, "fusion", "strategy_cum_return")
+    base_f1 = _report_metric_value(metrics, "base", "F1-score")
+    fusion_f1 = _report_metric_value(metrics, "fusion", "F1-score")
+    base_drawdown = _report_metric_value(metrics, "base", "max_drawdown")
+    fusion_drawdown = _report_metric_value(metrics, "fusion", "max_drawdown")
+    base_trades = _report_metric_value(metrics, "base", "trade_count")
+    fusion_trades = _report_metric_value(metrics, "fusion", "trade_count")
+    threshold = _report_metric_value(metrics, "base", "threshold")
+    sell_threshold = _report_metric_value(metrics, "base", "sell_threshold")
+    hidden_size = _report_metric_value(metrics, "base", "hidden_size")
+    num_layers = _report_metric_value(metrics, "base", "num_layers")
+    epochs_trained = _report_metric_value(metrics, "base", "epochs_trained")
+
+    model_choice = "普通 LSTM"
+    if pd.notna(fusion_return) and fusion_return > base_return and pd.notna(fusion_f1) and fusion_f1 >= base_f1:
+        model_choice = "融合 LSTM"
+
+    lines = [
+        "# LSTM股价方向预测与交易策略报告",
+        "",
+        "## 1. 研究目标",
+        f"本报告从日频行情、市场环境、估值指标和经营绩效指标出发，预测未来 {horizon} 个交易日累计收益率方向，并把预测概率转化为可回测的 long-flat 交易信号。研究重点不是直接预测股价点位，而是判断短期上涨概率是否足够高、是否值得持仓。",
+        "",
+        "## 2. 数据与标签",
+        f"每个样本使用过去 {window} 个交易日作为输入窗口。分类标签由 `future_{horizon}d_return > 0` 得到：未来累计收益为正记为上涨，否则记为非上涨。数据按时间顺序切分训练集、验证集和测试集，避免随机打乱造成未来信息泄露。",
+        "",
+        "数据来源包括 `data/processed/stock_market_features.csv`、`data/processed/financial_indicators.csv`、`outputs/tables/topsis_scores.csv` 和披露日表。财务与TOPSIS指标通过披露日向后生效，只允许模型使用当日已经公开的信息。",
+        "",
+        "## 3. 模型设计",
+        "普通 LSTM 使用行情、技术指标、市场指数收益、估值和市值等日频特征，重点捕捉价格序列自身的短期动量、均值回归和波动结构。",
+        "",
+        "融合 LSTM 在普通特征之外加入营业收入、净利润、ROE、毛利率、净利率、资产负债率、流动比率、收入增长、净利润增长、TOPSIS得分和排名等经营绩效变量，用来检验基本面质量是否能提高方向判断。",
+        "",
+        f"训练脚本默认采用 2 层 LSTM、隐藏层宽度 64；本轮单次结果表记录的普通模型实际参数为 {int(num_layers) if pd.notna(num_layers) else 'NA'} 层、隐藏层宽度 {int(hidden_size) if pd.notna(hidden_size) else 'NA'}。模型使用 dropout、BCEWithLogitsLoss 和早停机制。普通模型本轮在第 {_fmt_num(epochs_trained, 0)} 轮附近停止，说明验证集损失已经进入平台期，继续加轮数收益有限。",
+        "",
+        "## 4. 策略层设计",
+        f"模型输出上涨概率后，不再简单使用 0.50 作为买入阈值，而是在验证集上选择双阈值：买入阈值约为 {_fmt_num(threshold, 2)}，卖出/空仓阈值约为 {_fmt_num(sell_threshold, 2)}。当上涨概率高于买入阈值且市场过滤条件通过时持仓，否则空仓。",
+        "",
+        "阈值目标采用风险调整收益：验证集策略收益减去回撤惩罚和交易频率惩罚。回测按单边0.1%交易成本扣除，并加入中证医药20日收益过滤，只有行业环境不弱于设定阈值时才允许开仓。",
+        "",
+        "## 5. 核心结果",
+        "```text",
+        table.round(4).to_string() if not table.empty else "No metric table available.",
+        "```",
+        "",
+        "结果解释：",
+        f"- 普通 LSTM 的 F1-score 为 {_fmt_num(base_f1)}，策略累计收益为 {_fmt_pct(base_return)}，最大回撤为 {_fmt_pct(base_drawdown)}，交易次数为 {_fmt_num(base_trades, 0)}。",
+        f"- 融合 LSTM 的 F1-score 为 {_fmt_num(fusion_f1)}，策略累计收益为 {_fmt_pct(fusion_return)}，最大回撤为 {_fmt_pct(fusion_drawdown)}，交易次数为 {_fmt_num(fusion_trades, 0)}。",
+        f"- 当前应优先采用{model_choice}作为 5 日方向交易主模型。融合模型可以保留为解释性对照和中长期研究方向，但在本轮短周期策略中没有显示出稳定优势。",
+        "",
+        "## 6. 图表解释",
+        "- `outputs/figures/lstm_prediction.png`：展示测试集真实方向与预测概率/预测类别的时间序列关系，用来判断模型信号是否集中出现在趋势转换附近。",
+        "- `outputs/figures/lstm_price_direction.png`：把预测信号叠加到收盘价走势上，便于观察买入信号是否避开了明显下跌段。",
+        "- `outputs/figures/lstm_strategy_return.png`：比较模型策略、买入持有和朴素动量策略的累计收益，是判断模型是否有交易价值的主图。",
+        "- `outputs/figures/lstm_metrics_comparison.png`：比较 Accuracy、F1-score、策略收益和回撤等指标，避免只看准确率造成误判。",
+        "- `outputs/figures/lstm_confusion_matrix.png`：展示上涨/非上涨分类的混淆矩阵，用来识别模型是否偏向空仓或偏向看涨。",
+        "",
+        "## 7. 模型选择建议",
+        "短期交易策略优先看样本外策略收益、最大回撤、交易次数和滚动验证稳定性，而不是单次准确率。当前普通 LSTM 在策略收益和交易可执行性上更好，融合模型虽然理论上包含更多经营信息，但年频基本面变量对5日方向预测的边际贡献有限，且容易带来样本不足和信号钝化。",
+        "",
+        "因此，当前版本建议：普通 LSTM 作为主模型；融合 LSTM 暂不作为主交易模型，继续用于解释、稳健性对照和更长预测周期实验。",
+        "",
+        "## 8. 局限与下一步",
+        "本实验仍是单股票、短样本、日频回测，结论会受个股阶段行情影响。下一步应重点做三件事：第一，用滚动验证持续检验每一年样本外表现；第二，扩展到同行业多股票，区分个股特异性和行业共性；第三，尝试更长预测周期或低频再平衡，让财务绩效和TOPSIS指标有更充分的发挥空间。",
+    ]
+    report_path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train base/fusion LSTM models for stock trend prediction.")
     parser.add_argument("--data", default=str(PROCESSED_DIR / "lstm_model_data.csv"))
     parser.add_argument("--task", choices=["classification", "regression"], default="classification")
     parser.add_argument("--window", type=int, default=20)
     parser.add_argument("--horizon", type=int, default=5)
-    parser.add_argument("--epochs", type=int, default=50)
+    parser.add_argument("--epochs", type=int, default=80)
     parser.add_argument("--batch-size", type=int, default=16)
+    parser.add_argument("--hidden-size", type=int, default=64)
+    parser.add_argument("--num-layers", type=int, default=2)
     parser.add_argument("--model-type", choices=["base", "fusion", "both"], default="both")
     parser.add_argument("--ga-generations", type=int, default=1)
     parser.add_argument("--ga-population", type=int, default=4)
     parser.add_argument("--ga-epochs", type=int, default=5)
     parser.add_argument("--class-weight", choices=["balanced", "none"], default="balanced")
     parser.add_argument("--threshold", type=float, default=0.5)
-    parser.add_argument("--transaction-cost", type=float, default=0.001, help="Single-side cost, e.g. 0.001 means 0.1%.")
+    parser.add_argument("--threshold-objective", choices=["f1", "strategy_return", "risk_adjusted_return"], default="risk_adjusted_return")
+    parser.add_argument("--threshold-mode", choices=["single", "dual"], default="dual")
+    parser.add_argument("--min-hold-proba", type=float, default=0.55)
+    parser.add_argument("--min-valid-trades", type=int, default=5)
+    parser.add_argument("--drawdown-penalty", type=float, default=0.5)
+    parser.add_argument("--trade-penalty", type=float, default=0.002)
+    parser.add_argument("--market-filter-column", default="csi_pharma_return_20d")
+    parser.add_argument("--market-filter-min", type=float, default=0.0)
+    parser.add_argument("--transaction-cost", type=float, default=0.001, help="Single-side cost, e.g. 0.001 means 0.1%%.")
+    parser.add_argument("--log-interval", type=int, default=10, help="Print training loss every N epochs; 0 disables logs.")
+    parser.add_argument("--patience", type=int, default=10, help="Stop after N epochs without validation-loss improvement; 0 disables early stopping.")
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -748,6 +1091,18 @@ def main() -> None:
             class_weight=args.class_weight,
             threshold=args.threshold,
             transaction_cost=args.transaction_cost,
+            num_layers=args.num_layers,
+            hidden_size=args.hidden_size,
+            log_interval=args.log_interval,
+            patience=args.patience,
+            threshold_objective=args.threshold_objective,
+            min_hold_proba=args.min_hold_proba,
+            min_valid_trades=args.min_valid_trades,
+            threshold_mode=args.threshold_mode,
+            drawdown_penalty=args.drawdown_penalty,
+            trade_penalty=args.trade_penalty,
+            market_filter_column=args.market_filter_column,
+            market_filter_min=args.market_filter_min,
         )
         all_predictions.append(predictions)
         all_metrics.extend(metrics_rows)

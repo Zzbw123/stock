@@ -1,5 +1,7 @@
 # 长春高新绩效评价图表说明报告
 
+> LSTM股价方向预测、滚动验证和交易策略图表已单独整理在 `outputs/lstm_figure_usage_report.md`。本文件继续作为经营绩效评价图表说明，二者可在论文或答辩中配套使用。
+
 ## 报告用途
 
 本报告用于说明 `outputs/figures/` 中各张图表在长春高新经营绩效评价中的作用、阅读方式和解释意义。它可以作为论文、课程报告或答辩材料中的“图表说明”和“结果解释”基础。
@@ -302,4 +304,3 @@
 - `outputs/tables/plot_data_pca_loadings.csv`
 
 所有 PCA 和高级诊断图均保留了 `trace.json`、`figure_contracts.csv` 和 `figure_source_map.csv`，可追溯到源数据、生成脚本和图表设计目的。
-

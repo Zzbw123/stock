@@ -119,7 +119,7 @@ with tab3:
         st.info(
             "尚未生成 LSTM 结果，请先运行：\n\n"
             "python src/merge_model_data.py\n\n"
-            "python src/lstm_predict.py --task classification --window 20 --horizon 5 --model-type both"
+            "python src/lstm_predict.py --task classification --window 20 --horizon 5 --model-type both --epochs 80 --hidden-size 64 --num-layers 2 --patience 10 --threshold-mode dual --threshold-objective risk_adjusted_return --min-hold-proba 0.55 --min-valid-trades 5 --drawdown-penalty 0.5 --trade-penalty 0.002 --market-filter-column csi_pharma_return_20d --market-filter-min 0 --log-interval 10"
         )
     else:
         metrics = _load_csv(LSTM_METRICS)
@@ -165,7 +165,7 @@ with tab3:
         else:
             st.info(
                 "尚未生成滚动验证结果，请运行：\n\n"
-                "python src/rolling_validation.py --epochs 20 --first-test-year 2024 --transaction-cost 0.001"
+                "python src/rolling_validation.py --epochs 40 --hidden-size 64 --patience 10 --threshold-mode dual --threshold-objective risk_adjusted_return --min-hold-proba 0.55 --min-valid-trades 5 --drawdown-penalty 0.5 --trade-penalty 0.002 --market-filter-column csi_pharma_return_20d --market-filter-min 0 --first-test-year 2024 --transaction-cost 0.001 --log-interval 10"
             )
 
         st.subheader("滚动预测信号")
@@ -185,7 +185,7 @@ with tab3:
         else:
             st.info(
                 "尚未生成滚动预测信号，请运行：\n\n"
-                "python src/rolling_prediction.py --epochs 20 --first-test-year 2024 --transaction-cost 0.001"
+                "python src/rolling_prediction.py --epochs 40 --hidden-size 64 --patience 10 --threshold-mode dual --threshold-objective risk_adjusted_return --min-hold-proba 0.55 --min-valid-trades 5 --drawdown-penalty 0.5 --trade-penalty 0.002 --market-filter-column csi_pharma_return_20d --market-filter-min 0 --first-test-year 2024 --transaction-cost 0.001 --log-interval 10"
             )
 
         st.subheader("SHAP特征贡献")
@@ -250,7 +250,7 @@ with tab4:
     else:
         st.info(
             "尚未生成双分支模型结果，请运行：\n\n"
-            "python src/dual_branch_lstm.py --epochs 30 --window 20 --transaction-cost 0.001"
+            "python src/dual_branch_lstm.py --epochs 60 --lstm-hidden 64 --lstm-layers 2 --static-hidden 64 --window 20 --transaction-cost 0.001 --log-interval 10"
         )
 
     st.subheader("截面 TopK 非重叠调仓回测")
