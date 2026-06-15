@@ -54,6 +54,10 @@ def _require_torch():
     return torch, nn, DataLoader, TensorDataset
 
 
+def _torch_device(torch):
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 def _existing(df: pd.DataFrame, columns: list[str]) -> list[str]:
     return [col for col in columns if col in df.columns]
 
@@ -219,14 +223,17 @@ def train_dual_branch(
     run_name: str,
 ) -> tuple[object, float, int]:
     torch, nn, DataLoader, TensorDataset = _require_torch()
+    device = _torch_device(torch)
     torch.manual_seed(seed)
+    if device.type == "cuda":
+        torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)
     random.seed(seed)
 
-    model = build_model(x_seq.shape[2], x_static.shape[1], config)
+    model = build_model(x_seq.shape[2], x_static.shape[1], config).to(device)
     positives = float((y[train_idx] == 1).sum())
     negatives = float((y[train_idx] == 0).sum())
-    pos_weight = torch.tensor([negatives / positives], dtype=torch.float32) if positives > 0 else None
+    pos_weight = torch.tensor([negatives / positives], dtype=torch.float32, device=device) if positives > 0 else None
     criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
     train_ds = TensorDataset(
@@ -245,6 +252,9 @@ def train_dual_branch(
         model.train()
         train_loss = np.nan
         for seq_batch, static_batch, y_batch in loader:
+            seq_batch = seq_batch.to(device)
+            static_batch = static_batch.to(device)
+            y_batch = y_batch.to(device)
             optimizer.zero_grad()
             logits = model(seq_batch, static_batch)
             loss = criterion(logits, y_batch.float())
@@ -254,8 +264,11 @@ def train_dual_branch(
 
         model.eval()
         with torch.no_grad():
-            valid_logits = model(torch.tensor(x_seq[valid_idx]), torch.tensor(x_static[valid_idx]))
-            valid_loss = criterion(valid_logits, torch.tensor(y[valid_idx]).float()).item()
+            valid_seq = torch.tensor(x_seq[valid_idx], device=device)
+            valid_static = torch.tensor(x_static[valid_idx], device=device)
+            valid_y = torch.tensor(y[valid_idx], device=device).float()
+            valid_logits = model(valid_seq, valid_static)
+            valid_loss = criterion(valid_logits, valid_y).item()
         if valid_loss < best_valid:
             best_valid = valid_loss
             best_epoch = epoch + 1
@@ -281,9 +294,10 @@ def train_dual_branch(
 
 def predict_proba(model, x_seq: np.ndarray, x_static: np.ndarray) -> np.ndarray:
     torch, _nn, _DataLoader, _TensorDataset = _require_torch()
+    device = next(model.parameters()).device
     model.eval()
     with torch.no_grad():
-        logits = model(torch.tensor(x_seq), torch.tensor(x_static)).numpy()
+        logits = model(torch.tensor(x_seq, device=device), torch.tensor(x_static, device=device)).detach().cpu().numpy()
     return 1 / (1 + np.exp(-logits))
 
 

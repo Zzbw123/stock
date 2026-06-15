@@ -70,6 +70,10 @@ def _require_torch():
     return torch, nn, DataLoader, TensorDataset
 
 
+def _torch_device(torch):
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 def load_or_build_model_data(path: str | Path, horizon: int) -> pd.DataFrame:
     path = Path(path)
     if path.exists():
@@ -226,11 +230,14 @@ def train_model(
     min_delta: float = 0.0,
 ) -> tuple[object, float]:
     torch, nn, DataLoader, TensorDataset = _require_torch()
+    device = _torch_device(torch)
     torch.manual_seed(seed)
+    if device.type == "cuda":
+        torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)
     random.seed(seed)
 
-    model = build_model(x.shape[2], config.hidden_size, config.num_layers, config.dropout, task)
+    model = build_model(x.shape[2], config.hidden_size, config.num_layers, config.dropout, task).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
     if task == "classification":
         pos_weight = None
@@ -239,7 +246,7 @@ def train_model(
             positives = float((y_train == 1).sum())
             negatives = float((y_train == 0).sum())
             if positives > 0 and negatives > 0:
-                pos_weight = torch.tensor([negatives / positives], dtype=torch.float32)
+                pos_weight = torch.tensor([negatives / positives], dtype=torch.float32, device=device)
         criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
     else:
         criterion = nn.MSELoss()
@@ -258,6 +265,8 @@ def train_model(
         model.train()
         train_loss = math.nan
         for xb, yb in train_loader:
+            xb = xb.to(device)
+            yb = yb.to(device)
             optimizer.zero_grad()
             pred = model(xb)
             loss = criterion(pred, yb.float())
@@ -268,8 +277,10 @@ def train_model(
         if len(valid_idx):
             model.eval()
             with torch.no_grad():
-                valid_pred = model(torch.tensor(x[valid_idx]))
-                valid_loss = criterion(valid_pred, torch.tensor(y[valid_idx]).float()).item()
+                valid_x = torch.tensor(x[valid_idx], device=device)
+                valid_y = torch.tensor(y[valid_idx], device=device).float()
+                valid_pred = model(valid_x)
+                valid_loss = criterion(valid_pred, valid_y).item()
         else:
             valid_loss = loss.item()
 
@@ -300,15 +311,17 @@ def train_model(
         "best_valid_loss": float(best_valid),
         "epochs": int(max_epochs),
         "epochs_trained": int(epochs_trained),
+        "device": str(device),
     }
     return model, float(best_valid)
 
 
 def predict_model(model, x: np.ndarray, task: str, threshold: float = 0.5) -> tuple[np.ndarray, np.ndarray]:
     torch, _nn, _DataLoader, _TensorDataset = _require_torch()
+    device = next(model.parameters()).device
     model.eval()
     with torch.no_grad():
-        raw = model(torch.tensor(x)).numpy()
+        raw = model(torch.tensor(x, device=device)).detach().cpu().numpy()
     if task == "classification":
         probability = 1 / (1 + np.exp(-raw))
         prediction = (probability >= threshold).astype(int)
